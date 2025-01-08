@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using AzureStudents.Data.Entities;
-using AzureStudents.Api.Data.DatabaseContexts;
 
 namespace AzureStudents.Data.DatabaseContexts;
 
