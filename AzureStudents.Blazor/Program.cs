@@ -1,4 +1,5 @@
 using AzureStudents.Blazor.Api;
+using AzureStudents.Blazor.Mapping;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
@@ -10,6 +11,13 @@ public class Program
         var builder = WebAssemblyHostBuilder.CreateDefault(args);
         builder.RootComponents.Add<App>("#app");
         builder.RootComponents.Add<HeadOutlet>("head::after");
+
+        // ==================================================================================================================
+        // Mapping
+        // ==================================================================================================================
+        builder.Services.AddAutoMapper(
+            typeof(AutoMapperProfile)
+        );
 
         // ==================================================================================================================
         // Network (API Service, data transfer)
