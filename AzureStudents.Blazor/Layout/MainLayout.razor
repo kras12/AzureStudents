@@ -1,0 +1,34 @@
+﻿@inherits LayoutComponentBase
+
+<div id="site-container" class="site-container">
+    <div id="page-container" class="page-container">
+        <!-- The site header -->
+        <header id="site-header" class="header-container">
+            <div class="jump-to-content-container">
+                <a href="#main">To main content</a>
+            </div>
+            <div class="site-info-container">
+                <div class="site-logo-container">
+                    <img class="logo-effect" src="/graphics/logo.webp" alt="Site logo.">
+                </div>
+                <div class="site-title-container">
+                    Azure Students
+                </div>
+            </div>
+        </header>
+        <!-- The page content -->
+        <div id="page-content-container" class="page-content-container">
+            <!-- The main content -->
+            <main>
+                @Body
+            </main>
+        </div>
+        <!-- The site footer -->
+        <footer id="site-footer" class="footer-container">
+            <div class="left-footer-container"></div>
+            <span class="align-self-center">© Copyright 2025- Azure Students</span>
+            <div class="right-footer-container">
+            </div>
+        </footer>
+    </div>
+</div>
