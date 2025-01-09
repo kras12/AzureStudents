@@ -1,0 +1,2364 @@
+/*==================================================================================================
+// Style: style.css
+// Author Jimmie Magnusson
+// Description: Main style sheet
+//==================================================================================================*/
+
+/*==================================================*/
+/* Global Variables                                 */
+/*==================================================*/
+:root
+{
+  /*==================================================*/
+  /* Action elements (buttons, links, etc)            */
+  /*                                                  */
+  /* Shared focus and hover styles                    */
+  /*==================================================*/
+
+  /* The background color for focused action elements */
+  --action-element-focus-background-color: #EEB281;
+
+  /* The text color for focused action elements */
+  --action-element-focus-text-color: black;
+
+  /* The background color for hovered action elements */
+  --action-element-hover-background-color: #EEC09A;
+
+  /* The transparent background color for hovered action elements */
+  --action-element-transparent-hover-background-color: #EEC09A30;
+
+  /* The text color for hovered action elements */
+  --action-element-hover-text-color: black;  
+
+  /*==================================================*/
+  /* Box shadows                                      */
+  /*==================================================*/  
+
+  /* The box shadow for focused elements (navigation menu, buttons, etc) */
+  --box-shadow-focus: 0px 0px 4px 3px var(--default-highlight-box-shadow-color);
+
+  /* The box shadow for hovered elements (navigation menu, buttons, etc) */
+  --box-shadow-hover: 0px 0px 2px 1px var(--default-highlight-box-shadow-color);
+
+  /* An extra glowing box shadow for hovered elements (navigation menu, buttons, etc) */
+  --box-shadow-hover-extra-glow: 0px 0px 2px 2px var(--default-highlight-box-shadow-color);   
+
+  /* A smooth box shadow */
+  --box-shadow-smooth: 0px 8px 16px 0px rgba(0, 0, 0, 0.2); 
+
+  /* The image slider box shadow */
+  --image-slider-box-shadow: var(--default-box-shadow);
+
+  /* The default box shadow */
+  --default-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+
+  /* The default highlight box shadow color */
+  --default-highlight-box-shadow-color: #C63900;
+
+  /*==================================================*/
+  /* Buttons                                          */
+  /*==================================================*/
+
+  /* The padding for buttons */
+  --button-padding: 0.1rem 1rem;
+
+  /* The text color for buttons */
+  --button-text-color: var(--default-bright-text-color);
+
+  /* The background color for function buttons */
+/*  --function-button-background-color: #62a3c1;*/
+  --function-button-background-color: #bd9942;
+
+    /* The background color for navigational buttons */
+  --navigational-button-background-color: var(--menu-container-background-color);
+
+  /* The background color for negative buttons */
+  --negative-button-background-color: #b3626e;  
+
+  /* The background color for positive buttons */  
+  --positive-button-background-color: #6c9371;
+
+  /* The background color for regular buttons */
+  --regular-button-background-color: var(--header-container-background-color);
+
+  /*==================================================*/
+  /* Code box                                         */
+  /*==================================================*/
+  
+  /* The padding for code boxes */
+  --code-box-padding: 0.35rem 1rem;
+
+  /*==================================================*/
+  /* Containers - Backgrounds                         */
+  /*==================================================*/
+
+  /* The background color for description lists */
+  --description-list-background-color: var(--header-container-background-color);
+
+  /* The background color for dropdown function menu containers */
+  --dropdown-function-menu-container-background-color: var(--function-button-background-color);
+
+  /* The background color for dropdown menu containers */
+  --dropdown-menu-container-background-color: var(--menu-container-background-color);
+
+  /* The background color for filled boxes */
+  --filled-box-background-color: #ddd;
+
+  /* The background color for footer containers */
+  /*--footer-container-background-color: var(--menu-container-background-color);*/
+  --footer-container-background-color: var(--header-container-background-color);
+
+  /* The background image for menu containers */
+  --footer-container-background-image: linear-gradient(180deg, 
+    var(--page-container-background-color) 0%, 
+    var(--footer-container-background-color) 5%);
+
+  /* The background color for header containers */
+  --header-container-background-color: #676e74;
+  
+  /* The background color for jump to content containers */
+  --jump-to-content-container-background-color: #002909;  
+
+  /* The background color for menu containers */
+  --menu-container-background-color: #c18062;
+
+  /* The background image for menu containers */
+  --menu-container-background-image: linear-gradient(180deg, 
+    var(--header-container-background-color) 0%, 
+    var(--menu-container-background-color) 5%, 
+    var(--menu-container-background-color) 95%, 
+    var(--page-container-background-color) 100%);
+
+  /* The background color for the page container */
+  --page-container-background-color: #e1e1e1;
+
+  /*  The background color outside of the actual webpage */
+  --site-container-background-color: #000000;
+
+  /*==================================================*/
+  /* Contrast mode                                    */
+  /*==================================================*/
+  
+  /* The bright background color when in contrast mode */
+  --contrast-mode-bright-background-color: #ffffff;
+
+  /* The bright text color when in contrast mode */
+  --contrast-mode-bright-text-color: var(--default-bright-text-color);
+
+  /* The dark background color when in contrast mode */
+  --contrast-mode-dark-background-color: #000000;
+
+  /* The dark text color when in contrast mode */
+  --contrast-mode-dark-text-color: #000000; 
+
+  /* The semi dark background color when in contrast mode */
+  --contrast-mode-semi-dark-background-color: rgba(0, 0, 0, 0.8);
+
+  /*==================================================*/
+  /* Defaults                                         */
+  /*==================================================*/
+
+  /* The default bright text color */
+  --default-bright-text-color: whitesmoke; 
+
+  /* The default font size */
+  --default-font-size: medium;   
+
+  /*==================================================*/
+  /* Elements                                         */
+  /*==================================================*/  
+
+  /* The border radius for rounded elements (button, input, etc) */
+  --rounded-element-border-radius: 6px;
+
+  /*==================================================*/
+  /* Footer                                           */
+  /*==================================================*/
+
+  /* The height of the footer container */
+  --footer-container-height: var(--horizontal-menu-item-height);
+
+  /* The text color inside the footer container */
+  --footer-text-color: var(--default-bright-text-color);  
+
+  /*==================================================*/
+  /* Forms                                            */
+  /*==================================================*/
+
+  /* The padding for input elements */
+  --input-element-padding: 0.35rem 0.5rem;
+
+  /* The border color for input fields */
+  --input-field-border-color: #ccc;
+
+  /* The text color for placeholder texts */
+  --placeholder-text-color: #003919; 
+
+  /* The text color for required label texts */
+  --required-label-text-color: #800d0d;  
+
+  /*==================================================*/
+  /* Header                                           */
+  /*==================================================*/
+
+  /* The text color inside the header container */
+  --header-text-color: var(--default-bright-text-color);
+
+    /*==================================================*/
+    /* Image Slideshow                                   */
+    /*==================================================*/
+
+    /* The button color for the image slider */
+    --image-slideshow-button-color: var(--menu-container-background-color);
+
+    /* The button hover background color for the image slider */
+    --image-slideshow-button-hover-background-color: var(--action-element-transparent-hover-background-color);
+
+    /* The navigational dot color */
+    --image-slideshow-nav-dot-color:var(--header-container-background-color);
+
+    /* The navigational hover dot color */
+    --image-slideshow-nav-dot-hover-color: var(--menu-container-background-color);
+
+    /* The caption background color */
+    --image-slideshow-slide-caption-background-color: var(--menu-container-background-color);   
+
+    /* The caption color */
+    --image-slideshow-slide-caption-color: white;    
+
+  /*==================================================*/
+  /* Layout                                           */
+  /*==================================================*/  
+
+  /* The max content width  */
+  --max-content-width: 80rem;
+
+  /*==================================================*/
+  /* Login/Register - Modal box
+  /*==================================================*/ 
+
+  /* The background color for the customer login modal box content */
+  --customer-login-button-modal-box-content-background-color: #918f8f;
+
+  /* The text color in the customer login modal box content */
+  --customer-login-button-modal-box-text-color: var(--navigation-link-text-color);
+
+  /* The background color for the customer register modal box content */
+  --customer-register-button-modal-box-content-background-color: #918f8f;
+
+  /* The text color in the customer register modal box content */
+  --customer-register-button-modal-box-text-color: var(--navigation-link-text-color);
+
+  /*==================================================*/
+  /* Links                                            */
+  /*==================================================*/  
+
+  /* The text color for links */
+  --link-text-color: #223DCE;
+
+  /* The text color for visited links */
+  --visited-link-text-color: #162b9d;  
+
+  /*==================================================*/
+  /* Menus                                            */
+  /*==================================================*/
+
+  /* Set to 1 when the primary navigation menu should be converted to a dropdown menu */
+  --convert-primary-navigation-menu-to-hamburger-menu: 0;
+
+  /* Set to 1 when the transformable demo navigation menu should be converted to a dropdown menu */
+  --convert-transformable-demo-navigation-menu-to-dropdown-menu: 0;
+
+  /* The height of horizontal menu items */
+  --horizontal-menu-item-height: 2.5rem;  
+
+  /* The text color for navigation links */
+  --navigation-link-text-color: var(--default-bright-text-color);
+
+  /*==================================================*/
+  /* Messages - Background colors                     */
+  /*==================================================*/
+
+  /* The background color for error messages */
+  --error-message-background-color: #b3626e;
+
+  /* The background color for neutral messages */
+  --neutral-message-background-color: #66bbaf;
+
+  /* The background color for success messages */
+  --success-message-background-color: #8dc4a5;
+
+  /*==================================================*/
+  /* Messages - Text colors                           */
+  /*==================================================*/
+
+  /* The text color for error messages */
+  --error-message-text-color: #61230a;
+
+  /* The text color for neutral messages */
+  --neutral-message-text-color: #264945;
+
+  /* The text color for success messages */
+  --success-message-text-color: #0a4f28;  
+
+  /* The text color for validation error messages */
+  --validation-error-message-text-color: #8c4953;
+
+  /* The text color for warning messages */
+  --warning-message-text-color: #66510b;  
+
+  /*==================================================*/
+  /* Panels                                           */
+  /*==================================================*/
+
+  /* The background color for panels */
+  --panel-window-background-color: #eff6ff87;  
+
+  /*==================================================*/
+  /* Site info                                        */
+  /*==================================================*/
+
+  /* The height for the site info container */
+  --site-info-container-height: 5.35rem;  
+
+  /*==================================================*/
+  /* Tables                                           */
+  /*==================================================*/
+
+  /* The background color for table headers */
+  --table-header-background-color: var(--header-container-background-color);
+
+  /* The highlight color for table rows */
+  --table-row-highlight-color: var(--header-container-background-color);
+
+  /* The text color for table text */
+  --table-text-color: var(--default-bright-text-color);
+
+  /*==================================================*/
+  /* Text                                             */
+  /*==================================================*/
+  
+  /* The medium text shadow */
+  --text-shadow-medium: 2px 2px 2px rgba(0, 0, 0, 0.3);
+
+
+} /* End global variables */
+
+/*==================================================*/
+/* Global styles                                    */
+/*==================================================*/
+
+/* All elements */
+* 
+{ 
+    box-sizing: border-box;
+} 
+
+/* All focused elements */
+*:focus
+{
+  box-shadow: var(--box-shadow-focus);
+  color: black;
+  outline-color: black;
+  outline-style: solid;
+  outline-width: 2px;  
+}
+
+/* Body */
+body
+{
+  /* Remove the white areas around the body caused by 
+    the browser's user agent style sheet */
+  margin: 0;
+}
+
+/*==================================================*/
+/* Global text settings (fonts, etc)                */
+/*==================================================*/
+
+/* Placeholders */
+::placeholder
+{
+  color: var(--placeholder-text-color);
+}
+
+/* Global font and line size */
+:is(html, button, a.button)
+{
+  font-family: 'Poppins', sans-serif;  
+  font-size: var(--default-font-size);
+  line-height: 1.5;  
+}
+
+/* Global alternative fonts */
+table,
+.code-box
+{
+  font-family: 'Roboto', sans-serif;
+}
+
+/*==================================================*/
+/* Global Links                                     */
+/*==================================================*/
+
+/* Links */
+a
+{
+  color: var(--link-text-color);
+}
+
+/* Links - Focus */
+a:focus
+{
+  background-color: var(--action-element-focus-background-color);
+  box-shadow: var(--box-shadow-focus);
+  color: var(--action-element-focus-text-color);
+}
+
+/* Links - Hover */
+a:has(img):hover
+{
+    background-color: inherit;
+}
+
+/* Links - Hover */
+a:hover
+{
+  background-color: var(--action-element-hover-background-color);
+  box-shadow: var(--box-shadow-hover);
+  color: var(--action-element-hover-text-color);
+}
+
+/* Links - Images */
+a img
+{
+    display: block;
+}
+
+/* Links - Visited */
+a:visited
+{
+  color: var(--visited-link-text-color);
+}
+
+/*==================================================*/
+/* Accessibility - High contrast mode               */
+/*==================================================*/
+
+/* High contrast mode - Colored tables - Colored rows */
+.contrast-mode-active :is(.colored-table tr:nth-child(2n+1) td)
+{
+  background-color: var(--contrast-mode-semi-dark-background-color);
+  color: var(--contrast-mode-bright-text-color);
+}
+
+/* High contrast mode - Dark background color and bright text color */
+.contrast-mode-active :is(.footer-container, .horizontal-menu-container, 
+  .jump-to-content-container, .message, .panel, 
+  .colored-table th, .card-table thead tr, .dropdown-menu ul),
+  .contrast-mode-active :is(button, input[type = 'submit']):not(:focus, :hover)
+{
+  background-color: var(--contrast-mode-dark-background-color);
+  color: var(--contrast-mode-bright-text-color);
+}
+
+/* High contrast mode - Light background color and dark text color */
+.contrast-mode-active :is(.page-container, .header-container, .filled-container, 
+  .code-box, input, textarea, select, .panel p, .site-title-container a)
+{
+  background-color: var(--contrast-mode-bright-background-color);
+  color: var(--contrast-mode-dark-text-color);
+}
+
+/* High contrast mode - Placeholders */
+.contrast-mode-active ::placeholder
+{
+  color: var(--contrast-mode-dark-text-color);
+}
+
+/*==================================================*/
+/* Accessibility - Measure mode                     */
+/*==================================================*/
+
+/* Measure mode info box 
+  Displays various measurement data about the webpage in the top of the header */
+.measure-mode-info-box
+{
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 0.6rem;
+  padding-left: 1.9rem;
+  padding-right: 1.9rem;
+  padding-top: 0.6rem;  
+  row-gap: 0.3125rem;
+}
+
+/*==================================================*/
+/* Accessibility - Menu                             */
+/*==================================================*/
+
+/* Accessibility menu */
+.accessibility-menu
+{ 
+  display: block;
+}
+
+/*==================================================*/
+/* Accessibilty - Read mode                         */
+/*==================================================*/
+
+/* Read mode - Hide elements */
+.read-mode-active :is(.right-sidebar-container, .footer-container, .hamburger-menu-icon),
+.read-mode-active .horizontal-menu:not(.demo-menu)
+{
+  display: none;
+}
+
+/*==================================================*/
+/* Buttons                                          */
+/*==================================================*/
+
+/* Buttons */
+button,
+input[type = 'submit'],
+input[type = 'image'],
+a.button
+{
+  background-color: var(--regular-button-background-color);
+  border: 1px solid var(--regular-button-background-color);
+	border-radius: var(--rounded-element-border-radius);
+	color: var(--button-text-color);
+  cursor: pointer;
+  line-height: 1.5rem;
+  padding: var(--button-padding);
+  text-decoration: none;
+
+}
+
+/* Buttons - Images */
+button img
+{
+  vertical-align: middle;
+}
+
+/*form button*/
+form button 
+{
+    display: block;
+}
+
+/* Function button */
+:is(button,
+input[type = 'submit'],
+input[type = 'image'],
+a.button).function-button
+{
+  background-color: var(--function-button-background-color);
+}
+
+/* Image buttons */
+.image-button,
+input[type = 'image'].image-button
+{
+  padding: 0;
+}
+
+/* Image buttons - Hover */
+:is(.image-button, input[type = 'image'].image-button):hover
+{
+   box-shadow: var(--box-shadow-hover-extra-glow);
+}
+
+/* Navigational button */
+:is(button,
+input[type = 'submit'],
+input[type = 'image'],
+a.button).navigational-button
+{
+  background-color: var(--navigational-button-background-color);
+}
+
+/* Negative button */
+:is(button,
+input[type = 'submit'],
+input[type = 'image'],
+a.button).negative-button
+{
+  background-color: var(--negative-button-background-color);
+}
+
+/* Positive button */
+:is(button,
+input[type = 'submit'],
+input[type = 'image'],
+a.button).positive-button
+{
+  background-color: var(--positive-button-background-color);
+}
+
+/*==================================================*/
+/* Buttons - Focus/Hover                            */
+/*                                                  */
+/* Keep focus and hover below special button types  */
+/* so they are not overriden.                       */
+/*==================================================*/
+
+/* Buttons - Focus */
+:is(button, input[type = 'submit'], input[type = 'image'], a.button):focus
+{
+  background-color: var(--action-element-focus-background-color);
+  color: var(--action-element-focus-text-color);
+}
+
+/* Buttons - Hover */
+:is(button, input[type = 'submit'], input[type = 'image'], a.button):hover
+{
+  background-color: var(--action-element-hover-background-color);  
+  box-shadow: var(--box-shadow-hover);
+  color: var(--action-element-hover-text-color);
+}
+
+/*==================================================*/
+/* Code box                                         */
+/*==================================================*/
+
+/* Code box container */
+.code-box
+{ 
+  background-color: #d4e1d8;
+  border: 1px dotted; 
+  border-radius: var(--rounded-element-border-radius);
+  padding: var(--code-box-padding);  
+  width: 100%;  
+  word-wrap: anywhere;
+}
+
+/*==================================================*/
+/* Description lists                                */
+/*==================================================*/
+
+/* Dl */
+dl
+{
+    border: solid #333;
+    border-width: 1px 1px 0 0;
+    display: flex;
+    flex-flow: row wrap;    
+}
+
+/* Dt */
+dt 
+{
+    flex-basis: 30%;
+    padding: 2px 4px;
+    background-color: var(--description-list-background-color);
+    text-align: right;
+    color: var(--header-text-color);
+    word-wrap: anywhere;
+}
+
+/* Dd */
+dd
+{
+    flex-basis: 70%;
+    flex-grow: 1;
+    margin: 0;
+    padding: 2px 4px;
+    border-bottom: 1px solid var(--description-list-background-color);
+}
+
+/*==================================================*/
+/* Filled containers                                */
+/*==================================================*/
+
+
+/* Filled container */
+.filled-container
+{
+  background-color: var(--filled-box-background-color);
+  box-shadow: var(--default-box-shadow);  
+}
+
+/*==================================================*/
+/* Flex containers                                  */
+/*==================================================*/
+
+/* Flex container - align items center */
+.flex-container__align-items-center
+{
+  align-items: center;
+}
+
+/* Flex container - align items start */
+.flex-container__align-items-start
+{
+  align-items: start;
+}
+
+/* Flex container - align self center */
+.flex-container__align-self-center
+{
+  align-self: center;
+}
+
+/* Flex container - column gap */
+.flex-container__column-gap__0-5-rem
+{
+  column-gap: 0.5rem;
+}
+
+/* Flex container - column gap */
+.flex-container__column-gap__1-rem
+{
+  column-gap: 1rem;
+}
+
+/* Flex container - column gap */
+.flex-container__column-gap__2-rem
+{
+  column-gap: 2rem;
+}
+
+/* Flex container - column gap */
+.flex-container__column-gap__4-rem
+{
+  column-gap: 2rem;
+}
+
+/* Flex container - column gap */
+.flex-container__column-gap__4-rem
+{
+  column-gap: 2rem;
+}
+
+/* Flex container - dl */
+:is(.vertical-flex-container, .horizontal-flex-container) dl
+{
+    margin-bottom: 0;
+    margin-top: 0;    
+}
+
+/* Flex container - justify content center */
+.flex-container__justify-content__center
+{
+    justify-content: center;
+}
+
+/* Flex container - justify content - space around */
+.flex-container__justify-content__space-around
+{
+    justify-content: space-around;
+}
+
+/* Flex container - justify content - space between */
+.flex-container__justify-content__space-between
+{
+    justify-content: space-between;
+}
+
+/* Flex container - justify content - space evenly */
+.flex-container__justify-content__space-evenly
+{
+    justify-content: space-evenly;
+}
+
+/* Flex container - Padding */
+.flex-container__padding__1-rem
+{
+  padding: 1rem;
+}
+
+/* Flex container - Padding */
+.flex-container__padding__2-rem
+{
+  padding: 2rem;
+}
+
+/* Flex container - row gap */
+.flex-container__row-gap__0-2-rem
+{
+  row-gap: 0.2rem;
+}
+
+/* Flex container - row gap */
+.flex-container__row-gap__0-5-rem
+{
+  row-gap: 0.5rem;
+}
+
+/* Flex container - row gap */
+.flex-container__row-gap__1-rem
+{
+  row-gap: 1rem;
+}
+
+/* Flex container - row gap */
+.flex-container__row-gap__2-rem
+{
+  row-gap: 2rem;
+}
+
+/* Flex container - row gap */
+.flex-container__row-gap__3-rem
+{
+  row-gap: 3rem;
+}
+
+/* Flex container - row gap */
+.flex-container__row-gap__4-rem
+{
+  row-gap: 4rem;
+}
+
+/* Flex container - row gap */
+.flex-container__wrap
+{
+  flex-wrap: wrap;
+}
+
+/* Horizontal flex container */
+.horizontal-flex-container
+{
+  display: flex;
+  flex-direction: row;
+}
+
+/* Vertical flex container */
+.vertical-flex-container
+{
+  display: flex;
+  flex-direction: column;
+}
+
+/*==================================================*/
+/* Footer containers                                */
+/*==================================================*/
+
+/* Footer container */
+.footer-container
+{
+  background-image: var(--footer-container-background-image);
+  bottom: 0;
+  color: var(--footer-text-color);	
+  column-gap: 0.625rem;  
+  display: flex;
+  font-size: 0.8em;
+  height: var(--footer-container-height);  
+  justify-content: space-between;  
+  padding-left: 1.875rem;
+  padding-right: 1.875rem;
+	position: absolute;  
+  width: 100%;  
+}
+
+/* Footer links */
+.footer-link img
+{
+  height: 100%;
+}
+
+/* Right footer container */
+.right-footer-container
+{
+  align-items: center;
+	display: flex;  
+  justify-content: right;
+  text-align: right;
+}
+
+/*==================================================*/
+/* Forms                                            */
+/*==================================================*/
+
+/* Input fields */
+input,
+textarea,
+select
+{
+  background-color: #eff6f1;
+  border: 1px solid var(--input-field-border-color);
+  border-radius: var(--rounded-element-border-radius);
+  margin-top: 0.3rem;
+  padding: var(--input-element-padding);  
+}
+
+/* Input fields - Focus */
+:is(input, textarea, select):focus
+{
+  background-color: var(--action-element-focus-background-color);
+  box-shadow: var(--box-shadow-focus);
+}
+
+/* Input fields having invalid values */
+:is(input, textarea):not(:placeholder-shown):invalid,
+:is(input, textarea):not(:placeholder-shown):invalid:focus
+{
+  color: red;
+}
+
+/* Input fields - Hover */
+:is(input, textarea, select):hover
+{
+  background-color: var(--action-element-hover-background-color);
+  box-shadow: var(--box-shadow-hover);
+}
+
+/* Input label */
+.input-label
+{
+	display: block;
+	text-align: left;
+}
+
+/* Number field - Chrome */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button 
+{
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Number field - Mozilla */
+input[type=number] 
+{
+  -moz-appearance: textfield;
+}
+
+/* Required label 
+   '*' character after the label name */
+.required-label
+{
+  color: var(--required-label-text-color);
+}
+
+/* Required label description 
+   Description for the '*' characters after the label names */
+.required-label-description
+{
+  color: var(--required-label-text-color);
+	text-align: center;	
+}
+
+/* Textarea */
+textarea
+{
+  line-height: 1.3;
+}
+
+/* Vertical form */
+.vertical-form
+{
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.9375rem;  
+  width: 100%;
+}
+
+/* Vertical form - Field */
+.vertical-form-field
+{
+  display: flex;
+  flex-direction: column;
+  max-width: 19rem;
+  min-width: 16rem;
+  width: 100%;
+}
+
+/* Vertical form - Field - Buttons */
+.vertical-form-field:has(button)
+{
+  align-items: center;
+}
+
+/*==================================================*/
+/* Grid   containers                                */
+/*==================================================*/
+
+/* Grid container */
+.grid-container
+{
+    display: grid;
+    column-gap: 2rem;
+    row-gap: 2rem;
+}
+
+/* Grid container - Auto columns */
+.grid-container.grid-container__auto-columns
+{
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+/*==================================================*/
+/* Header containers                                */
+/*==================================================*/
+
+/* Header container */
+.header-container
+{
+  background-color: var(--header-container-background-color);
+  color: var(--header-text-color);
+}
+
+/* Site info container */
+.site-info-container
+{
+  display: flex;
+  column-gap: 1rem;
+  flex-wrap: nowrap; 
+  height: var(--site-info-container-height);
+  margin-left: auto;
+  margin-right: auto;
+  max-width: var(--max-content-width);
+  padding: 0.8rem;
+  row-gap: 0;    
+}
+
+/* Site logo container */
+.site-logo-container
+{
+  height: 100%;
+}
+
+/* Site logo images */
+.site-logo-container > img,
+.site-logo-container > svg
+{
+  height: 100%;
+  width: 100%;  
+}
+
+/* Site title container */
+.site-title-container
+{
+  display: flex;
+  flex-direction: column;
+  font-size: 2rem;
+  justify-content: center;  
+}
+
+/* Site title container - Hovered links */
+.site-title-container a:hover
+{
+  background-color: revert;
+  box-shadow: none;
+  transform: rotateY(10deg);  
+  transition: 0.3s ease all;  
+}
+
+/* Site title container - Links */
+.site-title-container a
+{
+  color: var(--header-text-color);
+  text-decoration: none;  
+  text-shadow: var(-text-shadow-medium);
+}
+
+/*==================================================*/
+/* Headings                                         */
+/*==================================================*/
+
+/* Headings */
+:is(h1, h2, h3, h4, h5, h6)
+{
+    margin-block-end: 1rem;
+    margin-block-start: 1rem;
+    text-align: center;
+  
+}
+
+/* H1 inside <article> and <section> elements.
+  Web browsers overwrites some style attributes within these elements, 
+  which messes up the style of our website. So we need to make some adjustments here.
+*/
+:is(article, section) h1
+{
+  font-size: 2rem;
+  margin-block-end: 0.67rem;  
+  margin-block-start: 0.67rem;  
+}
+
+/* H# inside an <article> or <section> element */
+:is(article, section) :is(h1, h2, h3, h4, h5, h6)
+{
+  /* Let the parent containers handle the top margin */
+  margin-top: 0;
+}
+
+/*==================================================*/
+/* Image Slideshow                                  */
+/*==================================================*/
+
+/* Slideshow container */
+.image-slideshow-container
+{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    row-gap: 0.5rem;
+}
+
+/* Slideshow container */
+.image-slideshow-container a
+{
+    text-decoration: none;
+}
+
+/* Slideshow container - Image */
+.image-slideshow-container image
+{
+    max-height: 50vh;
+}
+
+/* Slideshow container - Image animation */
+.image-slideshow-container .image-fade 
+{
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+/* Slideshow container - Image animation - Keyframes */
+@keyframes fade 
+{
+    from {
+        opacity: .4
+    }
+
+    to {
+        opacity: 1
+    }
+}
+
+/* Slideshow container - Image slide */
+.image-slideshow-container .image-slide
+{
+    border-radius: 10px;
+    box-shadow: var(--image-slider-box-shadow);
+    display: none;
+}
+
+/* Slideshow container - Image slide - Active */
+.image-slideshow-container .image-slide.active
+{
+    display: block;
+}
+
+/* Slideshow container - Image slide - Caption */
+.image-slideshow-container .image-slide .image-slide-caption
+{
+    background-color: var(--image-slideshow-slide-caption-background-color);
+	text-align: center;
+	border-bottom-right-radius: 10px;
+	border-bottom-left-radius: 10px;
+	color: var(--image-slideshow-slide-caption-color);
+}
+
+/* Slideshow container - Image slide - Buttons */
+.image-slideshow-container :is(.previous-slider-button, .next-slider-button)
+{
+    color: var(--image-slideshow-button-color);
+    font-size: larger;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: -2.9rem;
+    padding: 1rem;
+    position: absolute;
+    top: 50%;
+    text-decoration: none;
+    transition: 0.6s ease;
+    user-select: none;
+    width: auto;
+}
+
+/* Slideshow container - Image slide - Buttons - Hover */
+.image-slideshow-container :is(.previous-slider-button, .next-slider-button):hover
+{
+    background-color: var(--image-slideshow-button-hover-background-color);
+    color: black;
+}
+
+/* Slideshow container - Image slide - Next button */
+.image-slideshow-container :is(.next-slider-button)
+{
+  right: 0;
+}
+
+/* Slideshow container - Navigation dots */
+.image-slideshow-container .navigation-dot 
+{
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: var(--image-slideshow-nav-dot-color);
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+/* Slideshow container - Navigation dots - Hover */
+.image-slideshow-container :is(.navigation-dot.active, .navigation-dot:hover)
+{
+    background-color: var(--image-slideshow-nav-dot-hover-color);
+}
+
+/*==================================================*/
+/* Images                                           */
+/*==================================================*/  
+
+/* Image */
+img
+{
+    object-fit: scale-down;
+}
+
+/* Image - Cover image */
+img.cover-image
+{
+    border-radius: 10px;
+    box-shadow: var(--default-box-shadow);
+}
+
+/*==================================================*/
+/* Logo                                             */
+/*==================================================*/  
+
+.logo-effect
+{
+    background-color: #cecece;
+    border-radius: 70%;
+    /*box-shadow: 0px 0px 20px -2px #373737;*/
+    padding: 4px;
+}
+
+.logo-effect:hover
+{
+    box-shadow: 0px 0px 20px -2px #f5f5f5;
+}
+
+/*==================================================*/
+/* Vertical Image gallery (1 column - flexbox)      */
+/*==================================================*/
+
+/* Image galleries */
+.vertical-image-gallery
+{
+  column-gap: 2em;
+  display: flex;  
+  margin-left: auto;
+  margin-right: auto;
+  row-gap: 2em;
+}
+
+/* Image galleries - Images */
+.vertical-image-gallery img
+{
+  height: auto;
+  width: 100%;  
+}
+
+/* Vertical image gallery */
+.vertical-image-gallery
+{  
+  flex-direction: column;  
+}
+
+/* Vertical image gallery - Figures */
+.vertical-image-gallery figure
+{
+  margin: 0;
+}
+
+/*==================================================*/
+/* Tiled image gallery (Grid - Autocolumn)          */
+/*==================================================*/
+
+/* Tiled image gallery */
+.tiled-image-gallery
+{
+    display: grid;
+    grid-auto-rows: 300px;
+    grid-gap: 40px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    justify-content: center;
+    padding: 1rem;
+}
+
+/* Tiled image gallery - Auto rows */
+.tiled-image-gallery.tiled-image-gallery__auto-rows
+{
+    grid-auto-rows: auto;
+}
+
+/* Tiled image gallery - Figure */
+.tiled-image-gallery figure
+{
+    border-radius: 10px;
+    box-shadow: var(--default-box-shadow);
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    margin: 0px;
+    padding: 10px;
+}
+
+/* Tiled image gallery - Figure caption */
+.tiled-image-gallery figcaption
+{
+    text-align: center;
+}
+
+/* Tiled image gallery - Grid gap */
+.tiled-image-gallery.tiled-image-gallery__grid-gap__0
+{
+    grid-gap: 0px;
+}
+
+/* Tiled image gallery - Image */
+.tiled-image-gallery img
+{
+    /*border-radius: 10px;*/
+    height: 100%;
+    object-fit: contain;
+    width: 100%;
+}
+
+/* Tiled image gallery - Image size */
+.tiled-image-gallery.tiled-image-gallery__image-size_medium
+{
+    grid-template-columns: repeat(auto-fit, minmax(180px, 400px));
+}
+
+/*==================================================*/
+/* Jump To Content                                  */
+/*==================================================*/
+
+/* Jump to content container */
+.jump-to-content-container
+{
+  background-color: var(--jump-to-content-container-background-color);
+  display: flex;
+  justify-content: left;  
+}
+
+/* Jump to content container - Focused links */
+.jump-to-content-container a:focus
+{
+  background-color: var(--action-element-focus-background-color);
+  border-radius: var(--rounded-element-border-radius);
+  box-shadow: var(--box-shadow-focus);  
+  color: var(--action-element-focus-text-color);
+  height: auto;
+  margin-bottom: 0.3rem;
+  margin-left: 0.3rem;  
+  padding: var(--button-padding);  
+}
+
+/* Jump to content container - Hovered links */
+.jump-to-content-container a:hover
+{
+  background-color: var(--action-element-focus-background-color);
+  box-shadow: var(--box-shadow-hover);
+  color: var(--action-element-hover-text-color);
+}
+
+/* Jump to content container - Links */
+.jump-to-content-container a
+{
+  color: var(--navigation-link-text-color);
+  display: block;
+  height: 0;
+  overflow: hidden;
+  padding: 0;  
+  text-decoration: none;  
+}
+
+/*==================================================*/
+/* Menus - Dropdown menus                           */
+/*==================================================*/
+
+/* Dropdown function menu - Item container */
+.dropdown-menu.dropdown-menu__is-function-menu ul button
+{
+  background-color: var(--dropdown-function-menu-container-background-color);
+}
+
+/* Dropdown menu */
+.dropdown-menu
+{
+    display: flex;
+    flex-direction: row;
+    height: var(--horizontal-menu-item-height);
+    justify-content: center;
+}
+
+/* Dropdown menu - Button 
+   Style the button to look like an ordinary navigation menu link */
+.dropdown-menu ul button
+{
+  border: none;
+  border-radius: unset;
+  display: block;
+  font-family: inherit;
+  font-size: inherit;
+  height: var(--horizontal-menu-item-height);
+  padding-bottom: 0;
+  padding-left: 0.9375rem;
+  padding-right: 0.9375rem;
+  padding-top: 0;  
+  width: 100%;  
+}
+
+/* Dropdown menu - Focus */
+:is(.dropdown-menu, .dropdown-menu ul li a, .dropdown-menu ul button):focus
+{
+  color: var(--action-element-focus-text-color);
+  background-color: var(--action-element-focus-background-color);
+  box-shadow: var(--box-shadow-focus);
+}
+
+/* Dropdown menu group */
+.dropdown-menu .menu-group {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Dropdown menu - Hover */
+:is(.dropdown-menu, .dropdown-menu ul li a, .dropdown-menu ul button):hover
+{
+  color: var(--action-element-hover-text-color);
+  background-color: var(--action-element-hover-background-color);
+  box-shadow: var(--box-shadow-hover);
+}
+
+/* Dropdown menu - Icon */
+.dropdown-menu-icon
+{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  padding-bottom: 0.25rem;
+  padding-left: 0.9375rem;
+  padding-right: 0.9375rem;
+  padding-top: 0.25rem;  
+}
+
+/* Dropdown menu - Icon stripes 
+   3 horizontal stripes stacked vertically makes up the icon design
+*/
+.dropdown-menu-icon-stripe
+{
+  background: #cdcdcd;
+  border-radius: 3px;
+  display: block;
+  height: 4px;
+  margin-bottom: 5px;
+  position: relative;
+  width: 33px;  
+}
+
+/* Dropdown menu - Icon stripes - Last child */
+.dropdown-menu-icon > .dropdown-menu-icon-stripe:last-child
+{
+  margin-bottom: 0;
+}
+
+/* Dropdown menu - Item container */
+.dropdown-menu ul
+{
+  background-color: var(--dropdown-menu-container-background-color);
+  box-shadow: var(--box-shadow-smooth);
+  display: none;
+  list-style-type: none;
+  margin: 0;
+  min-height: 2.5rem;
+  min-width: 10rem;
+  padding: 0;
+  position: absolute;  
+  z-index: 1;  
+}
+
+/* Dropdown menu - Items */
+.dropdown-menu ul li 
+{
+  height: var(--horizontal-menu-item-height);
+}
+
+/* Dropdown menu - Links */
+.dropdown-menu ul li a
+{
+  align-items: center;
+  color: var(--navigation-link-text-color);
+  display: inline-flex;
+  height: 100%;
+  justify-content: center;
+  padding: 0;
+  text-decoration: none;
+  width: 100%;  
+}
+
+/* Dropdown menu - Show menu on hover and focus  */
+.dropdown-menu:hover ul,
+.dropdown-menu:focus ul,
+.dropdown-menu:focus-within ul,
+.dropdown-menu ul:focus-within
+{
+  display: block;
+}
+
+/*==================================================*/
+/* Menus - Horizontal menus                         */
+/*==================================================*/
+
+/* Center navigation menus */
+.horizontal-menu-container.horizontal-menu-container__when-contains-dropdown-nav-menu__justify-content-center:has(nav.dropdown-menu),
+.horizontal-menu-container.horizontal-menu-container__justify-content__center
+{
+  justify-content: center;
+}
+
+/* Footer - Horizontal menu - Item container */
+.footer-menu .horizontal-menu ul
+{
+  justify-content: center;
+}
+
+/* Horizontal Menu */
+.horizontal-menu
+{
+  align-self: center;
+  display: flex;
+  flex-direction: row;
+  height: 100%;  
+  max-width: var(--max-content-width);
+  padding-left: 0.1rem;
+  padding-right: 0.1rem;
+}
+
+/* Horizontal menu - Container */
+.horizontal-menu-container
+{
+  background-image: var(--menu-container-background-image);
+  display: flex;
+}
+
+/* Horizontal menu - Container - Justify content */
+.horizontal-menu-container__justify-content__space-between
+{
+    justify-content: space-between;
+}
+
+/* Horizontal menu - Focus */
+:is(.horizontal-menu ul li a):focus
+{
+  color: var(--action-element-focus-text-color);
+  background-color: var(--action-element-focus-background-color);
+  box-shadow: var(--box-shadow-focus);  
+}
+
+/* Horizontal menu group */
+.horizontal-menu .menu-group {
+    display: flex;
+    flex-direction: row
+}
+
+/* Horizontal menu group - Right aligned */
+.horizontal-menu .menu-group.right-aligned {
+    margin-left: auto;
+}
+
+/* Horizontal menu - Hover */
+:is(.horizontal-menu ul li a):hover
+{
+  color: var(--action-element-hover-text-color);
+  background-color: var(--action-element-hover-background-color);
+  box-shadow: var(--box-shadow-hover);  
+}
+
+/* Horizontal menu - Item container */
+.horizontal-menu ul
+{
+  display: flex;
+  flex-grow: 1;
+  flex-wrap: wrap;
+  height: 100%;
+	list-style-type: none;
+  margin: 0;
+  padding: 0;  
+}
+
+/* Horizontal menu - Items */
+.horizontal-menu ul li
+{
+  height: var(--horizontal-menu-item-height);
+}
+
+/* Horizontal menu - Links */
+.horizontal-menu ul li a
+{
+  align-items: center;
+  color: var(--navigation-link-text-color);
+  column-gap: 0.2em;
+  display: inline-flex;
+  height: 100%;
+  padding-bottom: 0.3125rem;
+  padding-left: 0.9375rem;
+  padding-right: 0.9375rem;
+  padding-top: 0.3125rem; 
+  text-decoration: none;  
+}
+
+/*==================================================*/
+/* Messages and information panels                  */
+/*==================================================*/
+
+/* Close button */
+.message-x-button
+{
+  background: none;
+  border: none;
+  box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.3);
+  color:#000000;
+  font-size: small;
+  padding-bottom: 0px;
+  padding-left: 9px;
+  padding-right: 9px;
+  padding-top: 0px;
+}
+
+/* Messages and panels */
+.message,
+.panel
+{
+  border-color: black;
+  border-radius: 10px;
+  border-style: dotted;
+  border-width: 1px;
+  box-shadow: 0px 0px 4px 0px rgb(0 0 0 / 30%);
+  min-width: 16rem;
+  padding: 0.6rem;  
+  width: 100%;
+}
+
+/* Messages and panels - Paragraphs */
+:is(.message, .panel) p
+{
+  margin: 0;
+  margin-top: 0.3em;
+}
+
+/* Messages - Title */
+.message-title
+{
+  font-size: large;
+  font-weight: bold;
+}
+
+/* Panels - paragraphs */
+.panel p
+{
+  background-color: var(--panel-window-background-color);
+  border-radius: 10px;
+  padding: 0.6rem;  
+}
+
+/*==================================================*/
+/* Message Types                                    */
+/*                                                  */
+/* Messages and panels shares the same types        */
+/*==================================================*/
+
+/* Message types - Error */
+.message-type__error
+{
+  background-color: var(--error-message-background-color);
+  color: var(--error-message-text-color);
+}
+
+/* Message types - Neutral */
+.message-type__neutral
+{
+  background-color: var(--neutral-message-background-color);
+  color: var(--neutral-message-text-color);
+}
+
+/* Message types - Success */
+.message-type__success
+{
+  background-color: var(--success-message-background-color);
+  color: var(--success-message-text-color);
+}
+
+/* Message types - Warning */
+.message-type__warning
+{
+  background-color: var(--warning-message-background-color);
+  color: var(--warning-message-text-color);
+}
+
+/*==================================================*/
+/* Page containers                                  */
+/*==================================================*/
+
+/* Article container */
+article
+{
+  padding-bottom: 0.9375rem;
+  padding-left: 1.9rem;
+  padding-right: 1.9rem;  
+}
+
+/* Main content container */
+.main-content-container 
+{
+  margin-left: auto;
+  margin-right: auto;
+  max-width: var(--max-content-width);
+  padding-bottom: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  overflow-x: auto;
+  width: 100%;
+}
+
+/* Page container */
+.page-container
+{
+  background-color: var(--page-container-background-color);
+  /*max-width: 93.75rem;*/
+  width: 100%;  
+
+  /* Set the min height to ensure the footer is anchored to the bottom of the screen */
+  min-height: 100vh;  
+
+  /* Set the position to relative to ensure the footer is anchored to the bottom of the page */
+  position: relative;     
+}
+
+/* Page content container */
+.page-content-container
+{
+  display: grid;
+  padding-bottom: calc(var(--footer-container-height) + 2rem);
+
+  /* Grid #1: Main content. 
+     Grid #2: Right sidebar. */
+  grid-template-columns: 1fr auto;
+}
+
+/*==================================================*/
+/* Printing                                         */
+/*==================================================*/
+
+/* Media - Print */
+@media print
+{
+  /* Printing - Global variables */
+  :root
+  {
+    /* The text color for buttons */
+    --button-text-color: var(--default-print-text-color);
+
+    /* The default print text color */
+    --default-print-text-color: black;     
+
+    /* The text color for error messages */
+    --error-message-text-color: var(--default-print-text-color);
+
+    /* The text color inside the footer container  */
+    --footer-text-color: var(--default-print-text-color);
+
+    /* The text color inside the header container */
+    --header-text-color: var(--default-print-text-color);
+
+    /* The text color for navigation links */
+    --navigation-link-text-color: var(--default-print-text-color);
+
+    /* The text color for required label texts */
+    --required-label-text-color: var(--default-print-text-color);
+  }
+
+  /* Footer container */
+  .footer-container
+  {
+    /* Move the footer to the real bottom of the page */
+    position: relative;
+  }
+
+  /* Hide page elements */
+  .right-sidebar-container,
+  .horizontal-menu-container,
+  .footer-menu,
+  .right-footer-container
+  {
+    display: none;
+  }  
+
+  /* Page container */
+  .page-container
+  {
+    min-height: auto;
+  } 
+
+  /* Page content container */
+  .page-content-container
+  {
+    /* 
+      Workaround for browsers having problems 
+      with the display type grid, causing page breaks 
+      in the middle of text paragraphs.
+    */
+    display: block;
+  }
+
+  /* Site container */
+  .site-container
+  {
+    display: block;
+    width: 210mm;
+  }
+}
+
+/*==================================================*/
+/* Scrollable containers                            */
+/*==================================================*/
+
+/* Scrollable containers */
+.scrollable-container
+{
+  overflow-x: auto;
+  width: 100%;
+}
+
+/*==================================================*/
+/* Sidebar containers                               */
+/*==================================================*/
+
+/* Right sidebar container */
+.right-sidebar-container
+{
+  display: flex;
+  flex-direction: column;
+  padding-top: 1rem;
+  row-gap: 1.875rem;
+}
+
+/* Widget container */
+.widget-container
+{
+  display: flex;
+  justify-content: center;
+}
+
+/*==================================================*/
+/* Site containers                                  */
+/*==================================================*/
+
+/* Site container */
+.site-container
+{
+  background-color: var(--site-container-background-color);
+  display: flex;
+  justify-content: center;
+  min-width: 18.75rem;  
+}
+
+/*==================================================*/
+/* Tables - Card tables                             */
+/*                                                  */
+/*Vertical table with one header group and one row. */
+/*==================================================*/
+
+/* Card tables */
+.card-table
+{
+  box-shadow: 0px 0px 4px 0px rgb(0 0 0 / 30%);
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;  
+}
+
+/* Card tables - All cells */
+.card-table thead tr th,
+.card-table tbody tr td
+{
+  border-bottom: 1px dotted #ddd;
+  display: flex;    
+  flex-direction: column;
+  height: 2.5rem;
+  justify-content: center;
+  padding:unset;  
+}
+
+/* Card tables - Body cells */
+.card-table tbody tr td
+{
+  word-break: break-word;
+}
+
+/* Card tables - Body rows */
+.card-table tbody tr
+{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: auto;
+  margin-top: auto;
+  padding-bottom: 0.5rem;
+  padding-left: 0.9rem;
+  padding-right: 0.9rem;
+  padding-top: 0.5rem;
+  text-align: left;  
+}
+
+/* Card tables - Header cells */
+.card-table thead tr th
+{
+  border-bottom: 1px dotted #ddd;
+}
+
+/* Card tables - Header rows */
+.card-table thead tr
+{
+  background-color: var(--table-header-background-color);
+  color: var(--default-bright-text-color);
+  display: flex;
+  flex-direction: column;
+  font-size: larger;
+  height: 100%;
+  padding-bottom: 0.5rem;
+  padding-left: 0.9rem;
+  padding-right: 0.9rem;
+  padding-top: 0.5rem;  
+}
+
+/*==================================================*/
+/* Tables - Colored tables                          */
+/*==================================================*/
+
+/* Colored tables - Colored rows */
+:is(.colored-table):not(.card-table.colored-table).colored-table__highlight-odd tr:nth-child(2n+2) td,
+.card-table.colored-table.colored-table__highlight-odd tr:nth-child(2n+1) td,
+.card-table.colored-table.colored-table__highlight-odd tr:nth-child(2n+1) th
+{
+  background-color: var(--table-row-highlight-color);
+  color: var(--table-text-color);
+}
+
+:is(.colored-table):not(.card-table.colored-table).colored-table__highlight-odd tr:nth-child(2n+2) td a,
+.card-table.colored-table.colored-table__highlight-odd tr:nth-child(2n+1) td a
+{
+    color: var(--navigation-link-text-color);
+}
+
+/* Colored tables - Header */
+.colored-table th
+{
+  background-color: var(--table-header-background-color);
+  color: var(--default-bright-text-color);
+  font-size: larger;
+  padding-bottom: 0.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-top: 0.5rem;  
+}
+
+/* Colored Tables - Rows */
+.colored-table tr 
+{
+  border-bottom: 0;  
+}
+
+/*==================================================*/
+/* Tables - Regular tables                          */
+/*==================================================*/
+
+/* Tables */
+table
+{
+  border-collapse: collapse;  
+  border-spacing: 0;  
+  width: 100%;
+}
+
+/*Tables - Borders*/
+table,
+table tr td
+{
+    border-color: var(--table-header-background-color);
+  border-style: solid;
+  border-width: 1px;
+}
+
+/* Tables - Rows */
+table tr 
+{
+  /* The border caused a tiny gap between the header and the first row on colored tables */
+  border-bottom: 1px solid #ddd;  
+}
+
+/* Tables - Cells */
+table tr td
+{
+  padding-bottom: 0.3rem;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+  padding-top: 0.3rem;  
+}
+
+/* Tables - Slim */
+table.slim-table
+{
+    width: fit-content;
+}
+
+/*==================================================*/
+/* Text                                             */
+/*==================================================*/
+
+/* Error text */
+
+.error-text,
+.field-validation-error
+{
+    color: var(--error-message-text-color);
+}
+
+/* Sub paragraph */
+.sub-paragraph
+{
+  margin-top: 0;
+}
+
+/* Text alignment */
+.text-align-center
+{
+  text-align: center;
+}
+
+/* Text alignment */
+.text-align-left
+{
+  text-align: left;
+}
+
+/*==================================================*/
+/* Universal modifiers                              */
+/*==================================================*/
+
+/* Align self - Center */
+.align-self-center
+{
+    align-self: center;
+}
+
+/* Align self - End */
+.align-self-end
+{
+    align-self: end;
+}
+
+/* Font size - Large */
+.font-size_large
+{
+    font-size: large;
+}
+
+/* Font size - XLarge */
+.font-size_x-large
+{
+    font-size: x-large;
+}
+
+/* Full heigh */
+.full-height
+{
+  height: 100%;
+}
+
+/* Full width */
+.full-width
+{
+  width: 100%;
+}
+
+/* Hidden */
+.hidden
+{
+  display: none;
+}
+
+/* Inline block */
+.inline-block {
+    display: inline-block;
+}
+
+/* Max height */
+.max-height__30vh
+{
+    max-height: 30vh;
+}
+
+/* Max height */
+.max-height__40vh
+{
+    max-height: 40vh;
+}
+
+/* Max height */
+.max-height__50vh
+{
+    max-height: 50vh;
+}
+
+/* Max height */
+.max-height__60vh
+{
+    max-height: 60vh;
+}
+
+/* No margin */
+.no-margin
+{
+  margin: 0;
+}
+
+/* No top margin */
+.no-top-margin
+{
+  margin-top: 0;
+}
+
+ /* Padding */ 
+.padding__1rem
+{
+    padding: 1rem;
+}
+
+ /* Padding */ 
+.padding__horizontallly__1rem
+{
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+
+/* Width - 25% */
+.width__25
+{
+    width: 25%;
+}
+
+/* Width - 50% */
+.width__50 
+{
+    width: 50%;
+}
+
+/* Width - 75% */
+.width__75 
+{
+    width: 75%;
+}
+
+/* Width - 100% */
+.width__100
+{
+    width: 100%;
+}
+
+/*==================================================*/
+/* Responsive                                       */
+/*                                                  */
+/* Keep at bottom of document to ensure that        */
+/* selectors get higher priority.                   */
+/*==================================================*/
+
+/* Media - Max width */
+/*  1376 px (86 rem) */
+@media only screen and (max-width: 86rem)
+{
+  /* Global variables */
+  :root
+  {
+    --convert-transformable-demo-navigation-menu-to-dropdown-menu: 1;
+  }
+}
+
+/* Media - Max width */
+/* 1131.2 px (70.7 rem) */
+@media only screen and (max-width: 70.7rem)
+{
+  /* Card table */
+  .card-table
+  {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+  }
+
+  /* Card table - Rows */
+  .card-table thead tr,
+  .card-table tbody tr
+  {
+      padding-left: 0.6rem;
+      padding-right: 0.6rem;  
+  }  
+
+  /* Transformable table */
+  .transformable-table
+  {
+    display: none;
+  }  
+}
+
+/* Media - Max width */
+/* 990 px (61.875 rem) */
+@media only screen and (max-width: 61.875rem)
+{
+  /* Global variables */
+  :root
+  {
+    --convert-primary-navigation-menu-to-hamburger-menu: 1;
+  }
+
+  /* Page content container */
+  .page-content-container
+  {
+    /* Make the right sidebar fall down below the page content */
+    grid-template-columns: auto;
+  }
+   
+   /* Right sidebar container */
+  .right-sidebar-container
+  {
+    margin-bottom: 2.25rem;
+    margin-top: 1rem;
+    padding: 0;
+    width: 100%;
+  }
+}
+
+/* Media - Max width */
+/* 800 px (50 rem) */
+@media only screen and (max-width: 50rem)
+{
+  /* Vertical forms */
+  .vertical-form
+  {
+    min-width: auto;
+    width: 100%;
+  }
+}
+
+/* Media - Max width */
+/*  540 px (33.75 rem) */
+@media only screen and (max-width: 33.75rem)
+{
+  /* Dt */
+  dt 
+  {
+     flex-basis: 30%;
+  }
+
+  /* Dd */
+  dd
+  {
+    flex-basis: 70%;
+  }
+
+  /* Site info container */
+  .site-info-container
+  {
+    flex-wrap: wrap;
+    height: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
+  /* Site logo container */
+  .site-logo-container
+  {
+    height: 6.25rem;
+  }  
+}
+
+/* Media - Max width */
+/* 470 px (29.375 rem) */
+@media only screen and (max-width: 29.375rem)
+{
+  /* Global variables */
+  :root
+  {
+    /* The height of the footer container */
+    --footer-container-height: calc(var(--horizontal-menu-item-height) * 2);
+  }
+
+  /* Horizontal menu */
+  .horizontal-menu
+  {
+    width: 100%;
+  }
+
+  /* Horizontal menu container */
+  .horizontal-menu-container
+  {
+      flex-direction: column;
+      align-items: center;
+      
+  }
+
+  /* Horizontal menus - Menu items */
+  .horizontal-menu ul li
+  {
+    width: 100%;
+  }
+
+  /* Horizontal menus - Menu links */
+  .horizontal-menu ul li a
+  {
+    justify-content: center;
+    padding-left: 0;
+    padding-right: 0;
+    width: 100%;    
+  }
+
+  /* Padding */
+  .vertical-flex-container.flex-container__padding-small,
+  article
+  {
+    padding-left: 0.95rem;
+    padding-right: 0.95rem;
+  }
+}
+
+/* Media - Max width */
+/* 411.2 px (25.7 rem) */
+@media only screen and (max-width: 25.7rem)
+{
+  /* Flex containers - Padding - Small */
+  .flex-container.padding-small
+  {
+    padding: 0.6rem;
+  }
+
+  /* Footer container */
+  .footer-container
+  {
+    justify-content: space-evenly;
+  }
+
+  /* Footer container - left footer container */
+  .left-footer-container
+  {
+    display: none;
+  }    
+
+  /* Tiled image gallery */
+  .tiled-image-gallery,
+  .tiled-image-gallery figure
+  {
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+  }
+}
