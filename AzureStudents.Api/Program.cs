@@ -40,6 +40,18 @@ public class Program
         // Network (converters, cors, data transfers, filters)
         // ==================================================================================================================
 
+        // Cors policy
+#if DEBUG
+        string corsPolicyName = "LocalHostingCorsPolicy";
+
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy(corsPolicyName, builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+        });
+#endif
 
         // ==================================================================================================================
         //  Repositories
@@ -65,6 +77,10 @@ public class Program
         builder.Services.AddOpenApi();
 
         var app = builder.Build();
+
+#if DEBUG
+        app.UseCors(corsPolicyName);
+#endif
 
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
