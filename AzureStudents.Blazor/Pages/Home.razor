@@ -1,5 +1,17 @@
 ﻿@page "/"
+@using AzureStudents.Blazor.Components
 @using AzureStudents.Blazor.Components.Student
 
 <PageTitle>Students</PageTitle>
-<StudentTable/>
+
+<div class="vertical-flex-container flex-container__row-gap__1-rem flex-container__align-items-center">
+	@if (_isInitialized)
+	{
+		<StudentTable />
+	}
+	else
+	{
+		<LoadingIndicator/>
+	}
+</div>
+
