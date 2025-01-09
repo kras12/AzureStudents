@@ -24,15 +24,14 @@ public partial class StudentTable : ComponentBase
     /// </summary>
     private bool _isInitialized;
 
-    #endregion
-
-    #region Property
-
     /// <summary>
     /// Contains the students that was fetched from the database. 
     /// </summary>
-    [Parameter]
-	public ListViewModel<StudentViewModel> Students { get; set; } = new();
+	public ListViewModel<StudentViewModel> _students = new();
+
+    #endregion
+
+    #region Property
 
     /// <summary>
     /// The injected Auto Mapper service. 
@@ -62,7 +61,7 @@ public partial class StudentTable : ComponentBase
 
         if (result.Success)
         {
-            Students = new ListViewModel<StudentViewModel>(AutoMapper.Map<List<StudentViewModel>>(result.Value));
+            _students = new ListViewModel<StudentViewModel>(AutoMapper.Map<List<StudentViewModel>>(result.Value));
             _isInitialized = true;
         }
         else
@@ -76,7 +75,7 @@ public partial class StudentTable : ComponentBase
     /// </summary>
     private void AddStudentRow()
     {
-        Students.Models.Add(new StudentViewModel());
+        _students.Models.Add(new StudentViewModel());
     }
 
     /// <summary>
@@ -85,7 +84,7 @@ public partial class StudentTable : ComponentBase
     /// <param name="student">The student that was deleted.</param>
     private void AfterDeletedStudentEventHandler(StudentViewModel student)
 	{
-		Students.Models.Remove(student);
+        _students.Models.Remove(student);
     }
 
     /// <summary>
@@ -94,7 +93,7 @@ public partial class StudentTable : ComponentBase
     /// <param name="student">The student placeholder that was canceled.</param>
 	private void OnCancelEmptyRowEditEventHandler(StudentViewModel student)
 	{
-        Students.Models.Remove(student);
+        _students.Models.Remove(student);
     }
 
     #endregion

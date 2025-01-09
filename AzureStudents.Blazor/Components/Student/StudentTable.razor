@@ -13,7 +13,7 @@
 			</thead>
 			<tbody>
 				@{
-					foreach (var student in Students.Models)
+					foreach (var student in _students.Models)
 					{
 						<StudentTableRow Student="@student" AfterDeletedStudent="AfterDeletedStudentEventHandler" OnCancelEmptyRowEdit="OnCancelEmptyRowEditEventHandler" />
 					}
