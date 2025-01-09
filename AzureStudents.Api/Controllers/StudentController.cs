@@ -11,7 +11,7 @@ namespace AzureStudents.Api.Controllers;
 /// <summary>
 /// Handles student related activities. 
 /// </summary>
-[Route("api/students")]
+[Route("students-api/students")]
 [ApiController]
 public class StudentController : ControllerBase
 {
