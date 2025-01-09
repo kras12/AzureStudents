@@ -18,6 +18,6 @@ public class AutoMapperProfile : Profile
             .ReverseMap();
 
         CreateMap<CreateStudentDto, Student>();
-        CreateMap<EditStudentDto, Student>();
+        CreateMap<UpdateStudentDto, Student>();
     }
 }

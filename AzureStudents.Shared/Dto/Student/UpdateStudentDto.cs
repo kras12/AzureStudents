@@ -3,7 +3,7 @@
 /// <summary>
 /// Represents a student in the database. 
 /// </summary>
-public class EditStudentDto
+public class UpdateStudentDto
 {
     /// <summary>
     /// The first name of the student.

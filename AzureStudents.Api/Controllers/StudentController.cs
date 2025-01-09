@@ -111,7 +111,7 @@ public class StudentController : ControllerBase
     [ProducesResponseType<ApiResponseDto<StudentDto>>(StatusCodes.Status400BadRequest)]
     [ProducesResponseType<ApiResponseDto<StudentDto>>(StatusCodes.Status404NotFound)]
     [HttpPut("{id}")]
-    public async Task<IActionResult> Edit(int id, EditStudentDto studentDto)
+    public async Task<IActionResult> Edit(int id, UpdateStudentDto studentDto)
     {
         try
         {
