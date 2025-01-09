@@ -1,0 +1,48 @@
+﻿@if (_isInitialized)
+{
+	<h1>Students</h1>
+	<div class="vertical-flex-container flex-container__row-gap__1-rem flex-container__align-items-center">
+		<table class="slim-table colored-table">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				@{
+					foreach (var student in Students.Models)
+					{
+						<StudentTableRow Student="@student" AfterDeletedStudent="AfterDeletedStudentEventHandler" OnCancelEmptyRowEdit="OnCancelEmptyRowEditEventHandler" />
+					}
+				}
+				<tr>
+					<td colspan="4">
+						<div class="text-align-center">
+							<button @onclick=AddStudentRow>Add</button>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+}
+else
+{
+	<div class="horizontal-flex-container flex-container__justify-content__center">
+		<LoadingIndicator />
+	</div>
+	
+}
+
+@if (_apiErrors.Count > 0)
+{
+	<div class="vertical-flex-container">
+		@foreach (var error in _apiErrors)
+		{
+			<p class="error-text">@error.Body</p>
+		}
+	</div>
+}

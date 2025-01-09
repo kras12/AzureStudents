@@ -1,0 +1,51 @@
+﻿@if (_isProcessing)
+{
+	<tr>
+		<td colspan="4">
+			<div class="horizontal-flex-container flex-container__justify-content__center">
+				<LoadingIndicator />
+			</div>
+		</td>
+	</tr>
+}
+else if (_isInEditMode)
+{
+	<tr>
+		<td>@_editStudent.Id</td>
+		<td>
+			<input @bind-value=@_editStudent.FirstName />
+		</td>
+		<td>
+			<input @bind-value=@_editStudent.LastName />
+		</td>
+		<td>
+			<div class="horizontal-flex-container flex-container__justify-content__center flex-container__column-gap__0-5-rem">
+				<button class="positive-button" @onclick=SaveStudentAsync>Save</button>
+				<button class="function-button" @onclick=CancelEdit>Cancel</button>
+			</div>
+		</td>
+	</tr>
+	@if (_apiErrors.Count > 0)
+	{
+		<div class="vertical-flex-container">
+			@foreach (var error in _apiErrors)
+			{
+				<p class="error-text">@error.Body</p>
+			}
+		</div>
+	}
+}
+else
+{
+	<tr>
+		<td>@Student.Id</td>
+		<td>@Student.FirstName</td>
+		<td>@Student.LastName</td>
+		<td>
+			<div class="horizontal-flex-container flex-container__justify-content__center flex-container__column-gap__0-5-rem">
+				<button @onclick=StartEditMode>Edit</button>
+				<button class="negative-button" @onclick=DeleteStudent>Delete</button>
+			</div>
+		</td>
+	</tr>
+}
