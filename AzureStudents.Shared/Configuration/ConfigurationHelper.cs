@@ -30,6 +30,7 @@ public static class ConfigurationHelper
             .SetBasePath(AppContext.BaseDirectory)
             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
             .AddJsonFile($"appsettings.{environment}.json", optional: true, reloadOnChange: true)
+            .AddEnvironmentVariables()
             .Build();
     }
 
@@ -43,7 +44,7 @@ public static class ConfigurationHelper
     /// <returns><see cref="string"/></returns>
     public static string GetConnectionString()
     {
-        return _configurationRoot.GetConnectionString("DefaultConnectionString") 
+        return _configurationRoot.GetConnectionString("AzureStudentsDatabaseConnectionString") 
             ?? throw new KeyNotFoundException("The connection string was not found.");
     }
 
