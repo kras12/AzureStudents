@@ -73,20 +73,12 @@ public class Program
         // ==================================================================================================================
 
         builder.Services.AddControllers();
-        // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-        builder.Services.AddOpenApi();
 
         var app = builder.Build();
 
 #if DEBUG
         app.UseCors(corsPolicyName);
 #endif
-
-        // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
-        {
-            app.MapOpenApi();
-        }
 
         if (app.Environment.IsDevelopment())
         {
