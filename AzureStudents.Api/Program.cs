@@ -41,17 +41,15 @@ public class Program
         // ==================================================================================================================
 
         // Cors policy
-#if DEBUG
-        string corsPolicyName = "LocalHostingCorsPolicy";
+        string corsPolicyName = "DefaultCorsPolicy";
 
         builder.Services.AddCors(options =>
         {
             options.AddPolicy(corsPolicyName, builder => builder
-                .AllowAnyOrigin()
+                .AllowAnyOrigin()  
                 .AllowAnyMethod()
                 .AllowAnyHeader());
         });
-#endif
 
         // ==================================================================================================================
         //  Repositories
@@ -76,9 +74,7 @@ public class Program
 
         var app = builder.Build();
 
-#if DEBUG
         app.UseCors(corsPolicyName);
-#endif
 
         if (app.Environment.IsDevelopment())
         {
