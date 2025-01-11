@@ -54,9 +54,6 @@ public partial class StudentTable : ComponentBase
     {
         await base.OnInitializedAsync();
 
-        Console.WriteLine("Grr");
-        Debug.WriteLine("GRR");
-
         var result = await StudentsApiService.GetAllStudentsAsync();
 
         if (result.Success)
