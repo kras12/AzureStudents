@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using AzureStudents.Api.Constants;
 using AzureStudents.Data.Entities;
 using AzureStudents.Data.Repositories;
 using AzureStudents.Shared.Dto.Api;
 using AzureStudents.Shared.Dto.Student;
 using AzureStudents.Shared.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AzureStudents.Api.Controllers;
@@ -17,6 +19,11 @@ public class StudentController : ControllerBase
 {
     #region Fields
 
+    /// <summary>
+    /// The injected authorization service.
+    /// </summary>
+    protected readonly IAuthorizationService _authorizationService;
+
     // The injected Auto Mapper.
     private readonly IMapper _mapper;
 
@@ -24,6 +31,7 @@ public class StudentController : ControllerBase
     /// The injected student repository.
     /// </summary>
     private readonly IStudentRepository _studentRepository;
+
     #endregion
 
     #region Constructors
@@ -33,10 +41,12 @@ public class StudentController : ControllerBase
     /// </summary>
     /// <param name="studentRepository">The injected student repository.</param>
     /// <param name="mapper">The injected Auto Mapper.</param>
-    public StudentController(IStudentRepository studentRepository, IMapper mapper)
+    /// <param name="authorizationService">The injected authorization service.</param>
+    public StudentController(IStudentRepository studentRepository, IMapper mapper, IAuthorizationService authorizationService)
     {
         _studentRepository = studentRepository;
         _mapper = mapper;
+        _authorizationService = authorizationService;
     }
 
     #endregion
@@ -54,11 +64,16 @@ public class StudentController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create(CreateStudentDto studentDto)
     {
-        var student = _mapper.Map<Student>(studentDto);
-
         try
         {
+            if (!await IsAuthorized(ApplicationUserPolicies.FrontEndApplicationPolicy))
+            {
+                return Unauthorized(CreateUnauthorizedResponse());
+            }
+
+            var student = _mapper.Map<Student>(studentDto);
             await _studentRepository.AddAsync(student);
+
             return Ok(ApiResponseDto<StudentDto>.CreateSuccessfulResponse(_mapper.Map<StudentDto>(student)));
         }
         catch (Exception ex)
@@ -81,6 +96,11 @@ public class StudentController : ControllerBase
     {
         try
         {
+            if (!await IsAuthorized(ApplicationUserPolicies.FrontEndApplicationPolicy))
+            {
+                return Unauthorized(CreateUnauthorizedResponse());
+            }
+
             if (id <= 0)
             {
                 return BadRequest(ApiResponseDto<StudentDto>.CreateErrorResponse(ApiErrorMessageTypes.InvalidInputData, $"Invalid student id: {id}"));
@@ -115,6 +135,11 @@ public class StudentController : ControllerBase
     {
         try
         {
+            if (!await IsAuthorized(ApplicationUserPolicies.FrontEndApplicationPolicy))
+            {
+                return Unauthorized(CreateUnauthorizedResponse());
+            }
+
             if (id <= 0)
             {
                 return BadRequest(ApiResponseDto<StudentDto>.CreateErrorResponse(ApiErrorMessageTypes.InvalidInputData, $"Invalid student id: {id}"));
@@ -138,7 +163,6 @@ public class StudentController : ControllerBase
         }
     }
 
-
     /// <summary>
     /// Gets a student by ID.
     /// </summary>
@@ -153,6 +177,11 @@ public class StudentController : ControllerBase
     {
         try
         {
+            if (!await IsAuthorized(ApplicationUserPolicies.FrontEndApplicationPolicy))
+            {
+                return Unauthorized(CreateUnauthorizedResponse());
+            }
+
             if (id <= 0)
             {
                 return BadRequest(ApiResponseDto<StudentDto>.CreateErrorResponse(ApiErrorMessageTypes.InvalidInputData, $"Invalid student id: {id}"));
@@ -184,6 +213,11 @@ public class StudentController : ControllerBase
     {
         try
         {
+            if (!await IsAuthorized(ApplicationUserPolicies.FrontEndApplicationPolicy))
+            {
+                return Unauthorized(CreateUnauthorizedResponse());
+            }
+
             var students = _mapper.Map<List<StudentDto>>((await _studentRepository.GetAll()).ToList());
             return Ok(ApiResponseDto<List<StudentDto>>.CreateSuccessfulResponse(students));
         }
@@ -198,12 +232,33 @@ public class StudentController : ControllerBase
     #region Methods
 
     /// <summary>
+    /// Creates a response object for unathorized users.
+    /// </summary>
+    /// <param name="message">An optional custom message to use.</param>
+    /// <returns>An <see cref="ApiResponseDto{T}"/> object.</returns>
+    protected ApiResponseDto<StudentDto> CreateUnauthorizedResponse(string? message = null)
+    {
+        return ApiResponseDto<StudentDto>.CreateErrorResponse(ApiErrorMessageTypes.AuthorizationError, message ?? "Authorization failed.");
+    }
+
+    /// <summary>
     /// Returns a standard response for general errors.
     /// </summary>
     /// <returns><see cref="ObjectResult"/>.</returns>
     private ObjectResult CreateGeneralErrorResponse()
     {
         return StatusCode(500, ApiResponseDto<StudentDto>.CreateErrorResponse(ApiErrorMessageTypes.GeneralError, "An unexpected error occurred."));
+    }
+
+    /// <summary>
+    /// Checks whether the user is authorizated against a policy.
+    /// </summary>
+    /// <param name="policy">The policy.</param>
+    /// <returns>True if the user is authorized.</returns>
+    private async Task<bool> IsAuthorized(string policy)
+    {
+        var result = await _authorizationService.AuthorizeAsync(User, policy);
+        return result.Succeeded;
     }
 
     #endregion

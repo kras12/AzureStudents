@@ -1,5 +1,7 @@
 using AzureStudents.Blazor.Api;
 using AzureStudents.Blazor.Mapping;
+using Blazored.LocalStorage;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
@@ -29,6 +31,22 @@ public class Program
         {
             client.BaseAddress = new Uri(builder.Configuration["StudentsApiBaseUrl"]!);
         });
+
+        // ==================================================================================================================
+        // Security (authentication, authorization)
+        // ==================================================================================================================
+
+        builder.Services.AddScoped<AuthenticationStateProvider, ApiUserAuthenticationStateProvider>();
+        builder.Services.AddScoped<IApiUserAuthenticationStateProvider, ApiUserAuthenticationStateProvider>();
+
+        // ==================================================================================================================
+        // Storage
+        // ==================================================================================================================
+        builder.Services.AddBlazoredLocalStorage();
+
+        // ==================================================================================================================
+        // Build
+        // ==================================================================================================================
 
         await builder.Build().RunAsync();
     }

@@ -4,6 +4,12 @@ using Microsoft.OpenApi.Models;
 using AzureStudents.Api.Mapping;
 using AzureStudents.Data.DatabaseContexts;
 using AzureStudents.Data.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using AzureStudents.Api.Services;
+using AzureStudents.Api.Constants;
+using AzureStudents.Shared.Constants;
 
 namespace AzureStudents.Api;
 
@@ -27,6 +33,31 @@ public class Program
         builder.Services.AddSwaggerGen(option =>
         {
             option.SwaggerDoc("v1", new OpenApiInfo { Title = "Azure Students API", Version = "v1" });
+
+            option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+            {
+                In = ParameterLocation.Header,
+                Description = "Please enter a valid token",
+                Name = "Authorization",
+                Type = SecuritySchemeType.Http,
+                BearerFormat = "JWT",
+                Scheme = "Bearer"
+            });
+
+            option.AddSecurityRequirement(new OpenApiSecurityRequirement()
+            {
+                {
+                    new OpenApiSecurityScheme()
+                    {
+                        Reference = new OpenApiReference()
+                        {
+                            Type=ReferenceType.SecurityScheme,
+                            Id="Bearer"
+                        }
+                    },
+                    new string[]{}
+                }
+            });
         });
 
         // ==================================================================================================================
@@ -59,7 +90,41 @@ public class Program
         // ==================================================================================================================
         // Security (authentication, authorization, identity)
         // ==================================================================================================================
+        
+        // Authentication
+        builder.Services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme =
+            options.DefaultChallengeScheme =
+            options.DefaultForbidScheme =
+            options.DefaultScheme =
+            options.DefaultSignInScheme =
+            options.DefaultSignOutScheme = JwtBearerDefaults.AuthenticationScheme;
+        }).AddJwtBearer(options =>
+        {
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.Zero,
+                ValidateIssuer = true,
+                ValidIssuer = builder.Configuration["JWT:Issuer"],
+                ValidateAudience = true,
+                ValidAudience = builder.Configuration["JWT:Audience"],
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(
+                    Encoding.UTF8.GetBytes(builder.Configuration["JWT:SigningKey"]!))
+            };
+        });
 
+        // Authorization Policies
+        builder.Services.AddAuthorizationCore(options =>
+        {
+            options.AddPolicy(ApplicationUserPolicies.FrontEndApplicationPolicy, policy =>
+                policy.RequireClaim(ApplicationUserJwtClaims.ApplicationId, ApplicationConstants.FrontEndApplicationId));
+        });
+
+        // Token service
+        builder.Services.AddTransient<ITokenService, TokenService>();
 
         // ==================================================================================================================
         //  Seeding
@@ -84,6 +149,7 @@ public class Program
 
         app.UseHttpsRedirection();
 
+        app.UseAuthentication();
         app.UseAuthorization();
 
 
