@@ -100,7 +100,7 @@ public class StudentsApiService : IStudentsApiService
     /// <returns>An <see cref="ApiResponseDto{T}"/> containing a <see cref="StudentDto"/> object if successful.</returns>
     public async Task<ApiResponseDto<StudentDto>> CreateStudentAsync(CreateStudentDto createStudentDto)
     {
-        if (!await EnsureLoggedIn())
+        if (!await EnsureAuthenticated())
         {
             return ApiResponseDto<StudentDto>.CreateErrorResponse(ApiErrorMessageTypes.AuthorizationError, "API authentication failed.");
         }
@@ -117,7 +117,7 @@ public class StudentsApiService : IStudentsApiService
     /// <returns>An <see cref="ApiResponseDto{T}"/> that contains the result of the operation.</returns>
     public async Task<ApiResponseDto<StudentDto>> DeleteStudentAsync(int studentId)
     {
-        if (!await EnsureLoggedIn())
+        if (!await EnsureAuthenticated())
         {
             return ApiResponseDto<StudentDto>.CreateErrorResponse(ApiErrorMessageTypes.AuthorizationError, "API authentication failed.");
         }
@@ -132,7 +132,7 @@ public class StudentsApiService : IStudentsApiService
     /// <returns>An <see cref="ApiResponseDto{T}"/> containing a collection of <see cref="StudentDto"/> object if successful.</returns>
     public async Task<ApiResponseDto<List<StudentDto>>> GetAllStudentsAsync()
     {
-        if (!await EnsureLoggedIn())
+        if (!await EnsureAuthenticated())
         {
             return ApiResponseDto<List<StudentDto>>.CreateErrorResponse(ApiErrorMessageTypes.AuthorizationError, "API authentication failed.");
         }
@@ -148,7 +148,7 @@ public class StudentsApiService : IStudentsApiService
     /// <returns>An <see cref="ApiResponseDto{T}"/> containing a <see cref="StudentDto"/> object if successful.</returns>
     public async Task<ApiResponseDto<StudentDto>> GetStudentByIdAsync(int studentId)
     {
-        if (!await EnsureLoggedIn())
+        if (!await EnsureAuthenticated())
         {
             return ApiResponseDto<StudentDto>.CreateErrorResponse(ApiErrorMessageTypes.AuthorizationError, "API authentication failed.");
         }
@@ -165,7 +165,7 @@ public class StudentsApiService : IStudentsApiService
     /// <returns>An <see cref="ApiResponseDto{T}"/> containing a <see cref="StudentDto"/> object if successful.</returns>
     public async Task<ApiResponseDto<StudentDto>> UpdateStudentAsync(int studentId, UpdateStudentDto student)
     {
-        if (!await EnsureLoggedIn())
+        if (!await EnsureAuthenticated())
         {
             return ApiResponseDto<StudentDto>.CreateErrorResponse(ApiErrorMessageTypes.AuthorizationError, "API authentication failed.");
         }
@@ -198,23 +198,26 @@ public class StudentsApiService : IStudentsApiService
     #region OtherMethods
 
     /// <summary>
-    /// Attempts to make sure that the application is logged in.
+    /// Attempts to make sure that the application is logged in and that the authorization header is set. 
     /// </summary>
     /// <returns><see cref="Task{TResult}"/> with value true if logged in.</returns>
-    private async Task<bool> EnsureLoggedIn()
+    private async Task<bool> EnsureAuthenticated()
     {
         string? token = await ((ApiUserAuthenticationStateProvider)_authenticationStateProvider).GetTokenAsync();
+
+        if (token == null)
+        {
+            var loginResult = await Login();
+
+            if (loginResult.Success && loginResult.Value != null)
+            {
+                token = loginResult.Value.Token;
+            }
+        }
 
         if (token != null)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-            return true;
-        }
-
-        var loginResult = await Login();
-
-        if (loginResult.Success)
-        {
             return true;
         }
 
