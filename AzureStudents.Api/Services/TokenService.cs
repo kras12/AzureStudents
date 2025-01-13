@@ -4,6 +4,8 @@ using System.Text;
 using Microsoft.IdentityModel.JsonWebTokens;
 using AzureStudents.Api.Constants;
 using AzureStudents.Shared.Constants;
+using AzureStudents.Api.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace AzureStudents.Api.Services;
 
@@ -29,9 +31,9 @@ public class TokenService : ITokenService
     private readonly IConfiguration _config;
 
     /// <summary>
-    /// Represents a symmetric security key.
+    /// The JWT settings.
     /// </summary>
-    private readonly SymmetricSecurityKey _key;
+    private readonly JwtSettings _jwtSettings;
 
     #endregion
 
@@ -41,10 +43,10 @@ public class TokenService : ITokenService
     /// Constructor.
     /// </summary>
     /// <param name="config">The injected configuration manager.</param>
-    public TokenService(IConfiguration config)
+    public TokenService(IConfiguration config, IOptions<JwtSettings> jwtSettings)
     {
         _config = config;
-        _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:SigningKey"]!));
+        _jwtSettings = jwtSettings.Value;
     }
 
     #endregion
@@ -57,19 +59,21 @@ public class TokenService : ITokenService
     /// <returns>A token in the form of a <see cref="string"/>.</returns>
     public string CreateToken()
     {
+        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SigningKey));
+        var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha512Signature);
+
         var claims = new List<Claim>
         {
             new Claim(ApplicationUserJwtClaims.ApplicationId, ApplicationConstants.FrontEndApplicationId)
         };
-
-        var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
+        
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(claims),
             Expires = DateTime.Now.AddDays(TokenDurationInDays),
-            SigningCredentials = creds,
-            Issuer = _config["JWT:Issuer"],
-            Audience = _config["JWT:Audience"]
+            SigningCredentials = credentials,
+            Issuer = _jwtSettings.Issuer,
+            Audience = _jwtSettings.Audience
         };
 
         var tokenHandler = new JsonWebTokenHandler();

@@ -10,6 +10,8 @@ using System.Text;
 using AzureStudents.Api.Services;
 using AzureStudents.Api.Constants;
 using AzureStudents.Shared.Constants;
+using AzureStudents.Api.Configuration;
+using AzureKeyVaultConfigurationSource = AzureStudents.Api.Configuration.AzureKeyVaultSecretsConfigurationSource;
 
 namespace AzureStudents.Api;
 
@@ -90,8 +92,20 @@ public class Program
         // ==================================================================================================================
         // Security (authentication, authorization, identity)
         // ==================================================================================================================
-        
+
+        // Azure Key Vault
+        if (builder.Environment.IsProduction())
+        {
+            builder.Configuration.Sources.Add(new AzureKeyVaultConfigurationSource(new Uri(builder.Configuration["KeyVault:VaultUrl"]!), new()
+            {
+                builder.Configuration["KeyVault:JwtSigningKeySecretName"]!
+            }));
+        }
+
         // Authentication
+        var jwtSettingsSection = builder.Configuration.GetSection("Jwt");
+        builder.Services.Configure<JwtSettings>(jwtSettingsSection);
+
         builder.Services.AddAuthentication(options =>
         {
             options.DefaultAuthenticateScheme =
@@ -102,17 +116,19 @@ public class Program
             options.DefaultSignOutScheme = JwtBearerDefaults.AuthenticationScheme;
         }).AddJwtBearer(options =>
         {
+            var jwtSettings = jwtSettingsSection.Get<JwtSettings>()!;
+
             options.TokenValidationParameters = new TokenValidationParameters
             {
                 ValidateLifetime = true,
                 ClockSkew = TimeSpan.Zero,
                 ValidateIssuer = true,
-                ValidIssuer = builder.Configuration["JWT:Issuer"],
+                ValidIssuer = jwtSettings.Issuer,
                 ValidateAudience = true,
-                ValidAudience = builder.Configuration["JWT:Audience"],
+                ValidAudience = jwtSettings.Audience,
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes(builder.Configuration["JWT:SigningKey"]!))
+                    Encoding.UTF8.GetBytes(jwtSettings.SigningKey))
             };
         });
 
