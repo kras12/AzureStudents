@@ -383,11 +383,18 @@ body
 }
 
 /* Global font and line size */
-:is(html, button, a.button)
-{
+html {
   font-family: 'Poppins', sans-serif;  
   font-size: var(--default-font-size);
   line-height: 1.5;  
+}
+
+/* Buttons */
+:is(button, a.button)
+{
+  font-size: 0.9375rem;
+  line-height: 1;
+  padding: 0.3rem 0.6rem;
 }
 
 /* Global alternative fonts */
