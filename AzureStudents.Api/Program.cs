@@ -1,4 +1,3 @@
-using AzureStudents.Shared.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using AzureStudents.Api.Mapping;
@@ -11,7 +10,6 @@ using AzureStudents.Api.Services;
 using AzureStudents.Api.Constants;
 using AzureStudents.Shared.Constants;
 using AzureStudents.Api.Configuration;
-using AzureKeyVaultConfigurationSource = AzureStudents.Api.Configuration.AzureKeyVaultSecretsConfigurationSource;
 
 namespace AzureStudents.Api;
 
@@ -22,10 +20,56 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // ==================================================================================================================
-        // DB Context
+        // Setup temporary logging capabilities to support troubleshooting in the cloud. 
+        // ==================================================================================================================
+
+        using var loggerFactory = LoggerFactory.Create(config =>
+        {
+            config.AddConsole();
+            config.AddDebug();
+        });
+
+        // Flag to toggle logging
+        bool enableLogging = true;
+        ILogger? logger = enableLogging ? loggerFactory.CreateLogger<Program>() : null;
+
+        // ==================================================================================================================
+        // Import external configuration
+        // ==================================================================================================================
+        if (builder.Environment.IsProduction())
+        {
+            var keyVaultSecretsProvider = new AzureKeyVaultSecretsProvider(new Uri(builder.Configuration["KeyVault:VaultUrl"]!), logger);
+
+            builder.Configuration.AddInMemoryCollection(keyVaultSecretsProvider.GetSecrets(
+                new List<string>()
+                {
+                    builder.Configuration["KeyVault:JwtSigningKeySecretName"]!,
+                    builder.Configuration["KeyVault:AzureStudentsDatabaseConnectionStringSecretName"]!
+                })
+            );            
+        }
+
+        // Configure JWT settings
+        var jwtSettingsSection = builder.Configuration.GetSection("Jwt");
+        builder.Services.Configure<JwtSettings>(jwtSettingsSection);
+
+        // Configure database connection strings
+        var databaseConnectionStringsSection = builder.Configuration.GetSection("ConnectionStrings");
+        builder.Services.Configure<DatabaseConnectionStringsSettings>(databaseConnectionStringsSection);
+        var databaseConnectionStringsSettings = databaseConnectionStringsSection.Get<DatabaseConnectionStringsSettings>()!;
+
+        if (string.IsNullOrEmpty(databaseConnectionStringsSettings.AzureStudentsDatabaseConnectionString))
+        {
+            const string exitMessage = "No database connection string is configured. Shutting down application.";
+            logger?.LogError(exitMessage);
+            throw new InvalidOperationException(exitMessage);
+        }
+
+        // ==================================================================================================================
+        // Database (DB Context, etc)
         // ==================================================================================================================
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(ConfigurationHelper.GetConnectionString()));
+            options.UseSqlServer(databaseConnectionStringsSettings.AzureStudentsDatabaseConnectionString));
 
         // ==================================================================================================================
         // API Documentation
@@ -93,18 +137,7 @@ public class Program
         // Security (authentication, authorization, identity)
         // ==================================================================================================================
 
-        // Azure Key Vault
-        if (builder.Environment.IsProduction())
-        {
-            builder.Configuration.Sources.Add(new AzureKeyVaultConfigurationSource(new Uri(builder.Configuration["KeyVault:VaultUrl"]!), new()
-            {
-                builder.Configuration["KeyVault:JwtSigningKeySecretName"]!
-            }));
-        }
-
         // Authentication
-        var jwtSettingsSection = builder.Configuration.GetSection("Jwt");
-        builder.Services.Configure<JwtSettings>(jwtSettingsSection);
 
         builder.Services.AddAuthentication(options =>
         {
