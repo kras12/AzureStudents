@@ -1,0 +1,24 @@
+name: Azure Container Registry CI/CD
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+
+  deploy:  
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Login to Azure Container Registry
+      run: |
+        az acr login --name azurestudentsregistry --username ${{ secrets.AZURE_ACR_USERNAME }} --password ${{ secrets.AZURE_ACR_PASSWORD }}
+
+    - name: Build Docker Image
+      run: |
+        docker build -t azurestudentsregistry.azurecr.io/azurestudents/azurestudentsapi:latest -f ./AzureStudents.Api/Dockerfile .
+
+    - name: Push Docker Image
+      run: |
+        docker push azurestudentsregistry.azurecr.io/azurestudents/azurestudentsapi:latest      
