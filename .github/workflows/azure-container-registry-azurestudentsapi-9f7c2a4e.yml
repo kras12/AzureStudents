@@ -13,12 +13,12 @@ jobs:
 
     - name: Login to Azure Container Registry
       run: |
-        az acr login --name AzureStudentsRegistry --username ${{ secrets.AZURE_ACR_USERNAME }} --password ${{ secrets.AZURE_ACR_PASSWORD }}
+        az acr login --name azurestudentsregistry --username ${{ secrets.AZURE_ACR_USERNAME }} --password ${{ secrets.AZURE_ACR_PASSWORD }}
 
     - name: Build Docker Image
       run: |
-        docker build -t AzureStudentsRegistry.azurecr.io/azurestudents/azurestudentsapi:latest -f ./AzureStudents.Api/Dockerfile .
+        docker build -t azurestudentsregistry.azurecr.io/azurestudents/azurestudentsapi:latest -f ./AzureStudents.Api/Dockerfile .
 
     - name: Push Docker Image
       run: |
-        docker push AzureStudentsRegistry.azurecr.io/azurestudents/azurestudentsapi:latest      
+        docker push azurestudentsregistry.azurecr.io/azurestudents/azurestudentsapi:latest      
