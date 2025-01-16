@@ -22,7 +22,7 @@ jobs:
         # The name of the ACR, minus the .azurecr.io
         registry: azurestudentsregistrytest 
         # Repository to use
-        repository: AzureStudents
+        repository: azurestudents
         # Github access token for private repositories
         git_access_token: ${{ secrets.GITHUB_TOKEN }}
         # Docker image name
