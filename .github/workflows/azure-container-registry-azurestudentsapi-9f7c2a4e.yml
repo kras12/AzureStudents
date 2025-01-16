@@ -14,11 +14,11 @@ jobs:
       uses: Azure/acr-build@v1
       with:
         # Service Principal with Contributor role on the ACR
-        service_principal: ${{ secrets.AZURE_CLIENT_ID }}
+        service_principal: ${{ secrets.AZURE_ACR_CLIENT_ID }}
         # Service Principal password
-        service_principal_password: ${{ secrets.AZURE_CLIENT_SECRET }}
+        service_principal_password: ${{ secrets.AZURE_ACR_CLIENT_SECRET }}
         # Azure Container Registry tenant
-        tenant: ${{ secrets.AZURE_TENANT_ID }}
+        tenant: ${{ secrets.AZURE_ACR_TENANT_ID }}
         # The name of the ACR, minus the .azurecr.io
         registry: AzureStudentsRegistry 
         # Repository to use
