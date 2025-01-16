@@ -14,35 +14,11 @@ jobs:
     - name: Login to Azure Container Registry
       run: |
         az acr login --name azurestudentsregistrytest --username ${{ secrets.AZURE_ACR_USERNAME }} --password ${{ secrets.AZURE_ACR_PASSWORD }}
-    
-    - name: Build And Deploy To Azure Container Registry
-      uses: Azure/acr-build@v1
-      with:
-        # Service Principal with Contributor role on the ACR
-        #service_principal: ${{ secrets.AZURE_ACR_CLIENT_ID }}
-        # Service Principal password
-        #service_principal_password: ${{ secrets.AZURE_ACR_CLIENT_SECRET }}
-        # Azure Container Registry tenant
-        #tenant: ${{ secrets.AZURE_ACR_TENANT_ID }}
-        
-        # The name of the ACR, minus the .azurecr.io
-        registry: azurestudentsregistrytest 
-        # Repository to use
-        repository: azurestudents
-        # Github access token for private repositories
-        git_access_token: ${{ secrets.GITHUB_TOKEN }}
-        # Docker image name
-        image: azurestudentsapi
-        # Docker image tag, default to the commit SHA
-        tag: latest
-        # Branch to build from, defaults to master
-        branch: master
-        # The folder in the Github repo that holds the source
-        folder: AzureStudents.Blazor
-        # The location of the Dockerfile; defaults to ./Dockerfile
-        dockerfile: ./Dockerfile
-        # JSON specifying key=value pairs as as Docker build arguments
-        #build_args: # optional
-          
 
-      
+    - name: Build Docker Image
+      run: |
+        docker build -t azurestudentsregistrytest.azurecr.io/azurestudents/azurestudentsapi:latest -f ./AzureStudents.Blazor/Dockerfile .
+
+    - name: Push Docker Image
+      run: |
+        docker push azurestudentsregistrytest.azurecr.io/azurestudents/azurestudentsapi:latest      
