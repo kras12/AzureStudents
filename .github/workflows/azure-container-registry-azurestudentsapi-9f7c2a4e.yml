@@ -1,0 +1,42 @@
+name: Azure Container Registry CI/CD
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+
+  deploy:  
+    runs-on: ubuntu-latest
+    steps:    
+    - uses: actions/checkout@v4
+    - name: Build And Deploy To Azure Container Registry
+      uses: Azure/acr-build@v1
+      with:
+        # Service Principal with Contributor role on the ACR
+        service_principal: ${{ secrets.AZURE_CLIENT_ID }}
+        # Service Principal password
+        service_principal_password: ${{ secrets.AZURE_CLIENT_SECRET }}
+        # Azure Container Registry tenant
+        tenant: ${{ secrets.AZURE_TENANT_ID }}
+        # The name of the ACR, minus the .azurecr.io
+        registry: AzureStudentsRegistry 
+        # Repository to use
+        repository: AzureStudents
+        # Github access token for private repositories
+        git_access_token: ${{ secrets.GITHUB_TOKEN }}
+        # Docker image name
+        image: azurestudentsapi
+        # Docker image tag, default to the commit SHA
+        tag: latest
+        # Branch to build from, defaults to master
+        branch: master
+        # The folder in the Github repo that holds the source
+        folder: AzureStudents.Blazor
+        # The location of the Dockerfile; defaults to ./Dockerfile
+        dockerfile: ./Dockerfile
+        # JSON specifying key=value pairs as as Docker build arguments
+        #build_args: # optional
+          
+
+      
