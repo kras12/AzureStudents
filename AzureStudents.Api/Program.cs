@@ -211,6 +211,33 @@ public class Program
         {
             var services = scope.ServiceProvider;
             var context = services.GetRequiredService<ApplicationDbContext>();
+
+            // We currently have a database that goes into sleep during inactity to save money during development. 
+            // So we need to wake the database up. 
+            var delay = TimeSpan.FromSeconds(3);
+            var maxTime = TimeSpan.FromMinutes(10);
+            var startTime = DateTime.Now;
+
+            while (true)
+            {
+                if (DateTime.Now - startTime > maxTime)
+                {
+                    throw new Exception("Failed to wake up the database.");
+                }
+
+                logger?.LogInformation("Checking status of the database.");
+
+                if (context.Database.CanConnect())
+                {
+                    logger?.LogInformation("Database is ready.");
+                    break;
+                }
+
+                logger?.LogInformation("Waiting for the database to wake up.");
+
+                Thread.Sleep(delay);
+            }
+
             context.Database.Migrate();
         }
 
