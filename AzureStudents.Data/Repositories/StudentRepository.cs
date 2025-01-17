@@ -65,13 +65,15 @@ public class StudentRepository : IStudentRepository
     {
         try
         {
-            int numberDeleted = await _databaseContext.Students.Where(x => x.Id == id).ExecuteDeleteAsync();
+            var student = _databaseContext.Students.SingleOrDefault(x => x.Id == id);
 
-            if (numberDeleted == 0)
+            if (student == null)
             {
                 throw new EntityNotFoundException($"The student with ID '{id}' was not found.");
             }
 
+            _databaseContext.Students.Remove(student);
+            await _databaseContext.SaveChangesAsync();
         }
         catch (DbUpdateConcurrencyException)
         {
