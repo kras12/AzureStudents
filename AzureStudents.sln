@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureStudents.Shared", "Azu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureStudents.Blazor", "AzureStudents.Blazor\AzureStudents.Blazor.csproj", "{A1D452B6-9A84-49BF-B680-60B93A9DC4FF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureStudents.Test", "AzureStudents.Test\AzureStudents.Test.csproj", "{375A6F60-8D78-432E-B12A-6D8184669446}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{A1D452B6-9A84-49BF-B680-60B93A9DC4FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1D452B6-9A84-49BF-B680-60B93A9DC4FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1D452B6-9A84-49BF-B680-60B93A9DC4FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{375A6F60-8D78-432E-B12A-6D8184669446}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{375A6F60-8D78-432E-B12A-6D8184669446}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{375A6F60-8D78-432E-B12A-6D8184669446}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{375A6F60-8D78-432E-B12A-6D8184669446}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
