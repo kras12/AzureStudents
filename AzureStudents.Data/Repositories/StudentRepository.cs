@@ -118,6 +118,7 @@ public class StudentRepository : IStudentRepository
     /// <returns>A <see cref="Task"/>.</returns>
     public async Task UpdateAsync(Student student)
     {
+        _databaseContext.ChangeTracker.Clear();
         _databaseContext.Students.Update(student);
         int numberUpdated = await _databaseContext.SaveChangesAsync();
 
