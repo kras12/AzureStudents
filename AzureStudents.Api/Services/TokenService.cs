@@ -53,6 +53,11 @@ public class TokenService : ITokenService
     /// <returns>A token in the form of a <see cref="string"/>.</returns>
     public string CreateToken()
     {
+        if (string.IsNullOrEmpty( _jwtSettings.SigningKey))
+        {
+            throw new InvalidOperationException("The JWT signing key is empty");
+        }
+
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SigningKey));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha512Signature);
 
