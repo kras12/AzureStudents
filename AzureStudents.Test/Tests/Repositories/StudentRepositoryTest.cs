@@ -1,5 +1,4 @@
-﻿using AzureStudents.Data.Entities;
-using AzureStudents.Data.Repositories;
+﻿using AzureStudents.Data.Repositories;
 
 namespace AzureStudents.Test.Tests.Repositories;
 
@@ -220,23 +219,6 @@ public class StudentRepositoryTest : TestBase
         Assert.NotEqual(updatedStudent.LastName, createdStudent.LastName);
         Assert.Equal(updatedStudent.FirstName, fetchedStudent.FirstName);
         Assert.Equal(updatedStudent.LastName, fetchedStudent.LastName);
-    }
-
-    #endregion
-
-    #region HelperMethods
-
-    /// <summary>
-    /// Creates the default student. 
-    /// </summary>
-    /// <returns><see cref="Student"/></returns>
-    private Student CreateDefaultStudent()
-    {
-        return new Student()
-        {
-            FirstName = "Kalle",
-            LastName = "Anka",
-        };
     }
 
     #endregion

@@ -1,4 +1,5 @@
 ﻿using AzureStudents.Data.DatabaseContexts;
+using AzureStudents.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace AzureStudents.Test.Tests;
@@ -30,6 +31,23 @@ public class TestBase
 
         _applicationDbContext = new ApplicationDbContext(options);
         _applicationDbContext.Database.EnsureCreated();
+    }
+
+    #endregion
+
+    #region HelperMethods
+
+    /// <summary>
+    /// Creates the default student. 
+    /// </summary>
+    /// <returns><see cref="Student"/></returns>
+    protected Student CreateDefaultStudent()
+    {
+        return new Student()
+        {
+            FirstName = "Kalle",
+            LastName = "Anka",
+        };
     }
 
     #endregion
