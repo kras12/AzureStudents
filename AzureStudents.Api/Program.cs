@@ -33,6 +33,12 @@ public class Program
         bool enableLogging = true;
         ILogger? logger = enableLogging ? loggerFactory.CreateLogger<Program>() : null;
 
+
+        // ==================================================================================================================
+        // Configuration
+        // ==================================================================================================================
+        builder.Configuration.AddEnvironmentVariables();
+
         // ==================================================================================================================
         // Import external configuration
         // ==================================================================================================================
@@ -52,6 +58,7 @@ public class Program
         // Configure JWT settings
         var jwtSettingsSection = builder.Configuration.GetSection("Jwt");
         builder.Services.Configure<JwtSettings>(jwtSettingsSection);
+
 
         // Configure database connection strings
         var databaseConnectionStringsSection = builder.Configuration.GetSection("ConnectionStrings");
