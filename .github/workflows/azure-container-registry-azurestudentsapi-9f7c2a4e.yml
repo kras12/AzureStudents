@@ -18,6 +18,8 @@ jobs:
       run: dotnet restore
     - name: Build the project
       run: dotnet build --no-restore
+    - name: Debug - Print JWT Signing key
+      run: echo "The value of JWT signing key is '${{ secrets.JWT_SIGNINGKEY }}"'
     - name: Run tests
       env: 
         JWT__SIGNINGKEY: ${{ secrets.JWT_SIGNINGKEY }}
