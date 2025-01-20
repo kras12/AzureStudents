@@ -26,12 +26,7 @@ public class TokenService : ITokenService
     #region Fields
 
     /// <summary>
-    /// The injected configuration.
-    /// </summary>
-    private readonly IConfiguration _config;
-
-    /// <summary>
-    /// The JWT settings.
+    /// The injected JWT settings.
     /// </summary>
     private readonly JwtSettings _jwtSettings;
 
@@ -42,10 +37,9 @@ public class TokenService : ITokenService
     /// <summary>
     /// Constructor.
     /// </summary>
-    /// <param name="config">The injected configuration manager.</param>
-    public TokenService(IConfiguration config, IOptions<JwtSettings> jwtSettings)
-    {
-        _config = config;
+    /// <param name="jwtSettings">The injected JWT settings.</param>
+    public TokenService(IOptions<JwtSettings> jwtSettings)
+    { 
         _jwtSettings = jwtSettings.Value;
     }
 
