@@ -175,6 +175,9 @@ public class Program
         // Token service
         builder.Services.AddTransient<ITokenService, TokenService>();
 
+        // Authorization service
+        builder.Services.AddTransient<IUserAuthorizationService,  UserAuthorizationService>();
+
         // ==================================================================================================================
         //  Seeding
         // ==================================================================================================================

@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using AzureStudents.Api.Constants;
+using AzureStudents.Api.Services;
 using AzureStudents.Data.Entities;
 using AzureStudents.Data.Repositories;
 using AzureStudents.Shared.Dto.Api;
 using AzureStudents.Shared.Dto.Student;
 using AzureStudents.Shared.Enums;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AzureStudents.Api.Controllers;
@@ -20,9 +20,9 @@ public class StudentController : ControllerBase
     #region Fields
 
     /// <summary>
-    /// The injected authorization service.
+    /// The injected user authorization service.
     /// </summary>
-    protected readonly IAuthorizationService _authorizationService;
+    protected readonly IUserAuthorizationService _userAuthorizationService;
 
     // The injected Auto Mapper.
     private readonly IMapper _mapper;
@@ -41,12 +41,12 @@ public class StudentController : ControllerBase
     /// </summary>
     /// <param name="studentRepository">The injected student repository.</param>
     /// <param name="mapper">The injected Auto Mapper.</param>
-    /// <param name="authorizationService">The injected authorization service.</param>
-    public StudentController(IStudentRepository studentRepository, IMapper mapper, IAuthorizationService authorizationService)
+    /// <param name="userAuthorizationService">The injected user authorization service.</param>
+    public StudentController(IStudentRepository studentRepository, IMapper mapper, IUserAuthorizationService userAuthorizationService)
     {
         _studentRepository = studentRepository;
         _mapper = mapper;
-        _authorizationService = authorizationService;
+        _userAuthorizationService = userAuthorizationService;
     }
 
     #endregion
@@ -66,7 +66,7 @@ public class StudentController : ControllerBase
     {
         try
         {
-            if (!await IsAuthorized(ApplicationUserPolicies.FrontEndApplicationPolicy))
+            if (!await _userAuthorizationService.IsUserAuthorized(User, ApplicationUserPolicies.FrontEndApplicationPolicy))
             {
                 return Unauthorized(CreateUnauthorizedResponse());
             }
@@ -96,7 +96,7 @@ public class StudentController : ControllerBase
     {
         try
         {
-            if (!await IsAuthorized(ApplicationUserPolicies.FrontEndApplicationPolicy))
+            if (!await _userAuthorizationService.IsUserAuthorized(User, ApplicationUserPolicies.FrontEndApplicationPolicy))
             {
                 return Unauthorized(CreateUnauthorizedResponse());
             }
@@ -135,7 +135,7 @@ public class StudentController : ControllerBase
     {
         try
         {
-            if (!await IsAuthorized(ApplicationUserPolicies.FrontEndApplicationPolicy))
+            if (!await _userAuthorizationService.IsUserAuthorized(User, ApplicationUserPolicies.FrontEndApplicationPolicy))
             {
                 return Unauthorized(CreateUnauthorizedResponse());
             }
@@ -177,7 +177,7 @@ public class StudentController : ControllerBase
     {
         try
         {
-            if (!await IsAuthorized(ApplicationUserPolicies.FrontEndApplicationPolicy))
+            if (!await _userAuthorizationService.IsUserAuthorized(User, ApplicationUserPolicies.FrontEndApplicationPolicy))
             {
                 return Unauthorized(CreateUnauthorizedResponse());
             }
@@ -213,7 +213,7 @@ public class StudentController : ControllerBase
     {
         try
         {
-            if (!await IsAuthorized(ApplicationUserPolicies.FrontEndApplicationPolicy))
+            if (!await _userAuthorizationService.IsUserAuthorized(User, ApplicationUserPolicies.FrontEndApplicationPolicy))
             {
                 return Unauthorized(CreateUnauthorizedResponse());
             }
@@ -248,17 +248,6 @@ public class StudentController : ControllerBase
     private ObjectResult CreateGeneralErrorResponse()
     {
         return StatusCode(500, ApiResponseDto<StudentDto>.CreateErrorResponse(ApiErrorMessageTypes.GeneralError, "An unexpected error occurred."));
-    }
-
-    /// <summary>
-    /// Checks whether the user is authorizated against a policy.
-    /// </summary>
-    /// <param name="policy">The policy.</param>
-    /// <returns>True if the user is authorized.</returns>
-    private async Task<bool> IsAuthorized(string policy)
-    {
-        var result = await _authorizationService.AuthorizeAsync(User, policy);
-        return result.Succeeded;
     }
 
     #endregion
