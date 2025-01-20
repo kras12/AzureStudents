@@ -36,18 +36,18 @@ public class Program
         // ==================================================================================================================
         // Import external configuration
         // ==================================================================================================================
-        //if (builder.Environment.IsProduction())
-        //{
-        //    var keyVaultSecretsProvider = new AzureKeyVaultSecretsProvider(new Uri(builder.Configuration["KeyVault:VaultUrl"]!), logger);
+        if (builder.Environment.IsProduction())
+        {
+            var keyVaultSecretsProvider = new AzureKeyVaultSecretsProvider(new Uri(builder.Configuration["KeyVault:VaultUrl"]!), logger);
 
-        //    builder.Configuration.AddInMemoryCollection(keyVaultSecretsProvider.GetSecrets(
-        //        new List<string>()
-        //        {
-        //            builder.Configuration["KeyVault:JwtSigningKeySecretName"]!,
-        //            builder.Configuration["KeyVault:AzureStudentsDatabaseConnectionStringSecretName"]!
-        //        })
-        //    );            
-        //}
+            builder.Configuration.AddInMemoryCollection(keyVaultSecretsProvider.GetSecrets(
+                new List<string>()
+                {
+                    builder.Configuration["KeyVault:JwtSigningKeySecretName"]!,
+                    builder.Configuration["KeyVault:AzureStudentsDatabaseConnectionStringSecretName"]!
+                })
+            );
+        }
 
         // Configure JWT settings
         var jwtSettingsSection = builder.Configuration.GetSection("Jwt");
