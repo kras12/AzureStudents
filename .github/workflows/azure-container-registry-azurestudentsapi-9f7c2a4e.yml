@@ -9,7 +9,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     env:
-      JWT__SIGNINGKEY: "${{ secrets.JWT_SIGNINGKEY }}"
+      JWT__SIGNINGKEY: "AzureStudentsApiAzureStudentsApiAzureStudentsApiAzureStudentsApiAzureStudentsApiAzureStudentsApiAzureStudentsApiAzureStudentsApiAzureStudentsApi"
     steps:
     - uses: actions/checkout@v4
     - name: Set up .NET
