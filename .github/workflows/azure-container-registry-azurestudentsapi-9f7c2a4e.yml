@@ -8,6 +8,8 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
+    env:
+      JWT__SIGNINGKEY: ${{ secrets.JWT_SIGNINGKEY }}
     steps:
     - uses: actions/checkout@v4
     - name: Set up .NET
@@ -16,9 +18,6 @@ jobs:
         dotnet-version: '9.0'
     - name: Restore dependencies
       run: dotnet restore
-    - name: Set environment variables
-      env:
-        JWT__SIGNINGKEY: ${{ secrets.JWT_SIGNINGKEY }}
     - name: Build the project
       run: dotnet build --no-restore
     - name: Run tests
