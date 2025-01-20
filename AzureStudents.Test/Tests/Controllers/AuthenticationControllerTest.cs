@@ -1,12 +1,9 @@
-﻿using AzureStudents.Api.Configuration;
-using AzureStudents.Api.Controllers;
+﻿using AzureStudents.Api.Controllers;
 using AzureStudents.Api.Services;
 using AzureStudents.Shared.Constants;
 using AzureStudents.Shared.Dto.Authentication;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
+using Moq;
 using System.Security.Claims;
-using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
 namespace AzureStudents.Test.Tests.Controllers;
 
@@ -29,16 +26,13 @@ public class AuthenticationControllerTest : ControllerTestBase
         // Controller context
         var controllerContextMock = CreateControllerContextMock(claimsPrincipal);
 
-        // JWT configuration
-        IConfiguration configuration = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json")
-            .AddUserSecrets<AuthenticationController>()
-            .Build();
-
-        var options = Options.Create(configuration.GetSection("Jwt").Get<JwtSettings>()!);
+        // Token service 
+        var tokenServiceMock = new Mock<ITokenService>();
+        tokenServiceMock.Setup(x => x.CreateToken())
+            .Returns("ThisIsAVeryLongMockTokenThatLoopsThisIsAVeryLongMockTokenThatLoopsThisIsAVeryLongMockTokenThatLoops");
 
         // Authentication controller
-        var authenticationController = new AuthenticationController(new TokenService(options));
+        var authenticationController = new AuthenticationController(tokenServiceMock.Object);
         authenticationController.ControllerContext = controllerContextMock.Object;
 
         return authenticationController;
