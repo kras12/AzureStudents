@@ -8,6 +8,8 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
+    env:
+      JWT__SIGNINGKEY: "AzureStudentsApiAzureStudentsApiAzureStudentsApiAzureStudentsApiAzureStudentsApiAzureStudentsApiAzureStudentsApiAzureStudentsApiAzureStudentsApi"
     steps:
     - uses: actions/checkout@v4
     - name: Set up .NET
@@ -16,6 +18,8 @@ jobs:
         dotnet-version: '9.0'
     - name: Restore dependencies
       run: dotnet restore
+    - name: Print environment variables 
+      run: printenv | grep JWT__SIGNINGKEY
     - name: Build the project
       run: dotnet build --no-restore
     - name: Run tests
