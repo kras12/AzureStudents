@@ -19,6 +19,8 @@ jobs:
     - name: Build the project
       run: dotnet build --no-restore
     - name: Run tests
+      env: 
+        JWT__SIGNINGKEY: ${{ secrets.JWT__SIGNINGKEY }}
       run: dotnet test --no-build --verbosity normal
 
   deploy:  
