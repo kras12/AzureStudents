@@ -144,12 +144,10 @@ public partial class StudentTableRow : ComponentBase
     /// </summary>
     private void EndEditMode()
     {
-#if !DEBUG
 		if (!_isInEditMode)
 		{
 			throw new InvalidOperationException("Edit mode is already inactive.");
 		}
-#endif
 
         _isInEditMode = false;
         StateHasChanged();
@@ -160,7 +158,7 @@ public partial class StudentTableRow : ComponentBase
     {
         await base.OnParametersSetAsync();
 
-        if (Student.Id == 0)
+        if (Student.Id == 0 && !_isInEditMode)
         {
             StartEditMode();
         }
@@ -215,12 +213,10 @@ public partial class StudentTableRow : ComponentBase
     /// </summary>
 	private void StartEditMode()
 	{
-#if !DEBUG
         if (_isInEditMode)
         {
             throw new InvalidOperationException("Edit mode is already active.");
         }
-#endif
 
         AutoMapper.Map(Student, _editStudent);
         _isInEditMode = true;
